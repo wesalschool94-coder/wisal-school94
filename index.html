@@ -187,24 +187,6 @@
       margin-top: 18px;
     }
 
-    .cloud-access {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 18px;
-      padding: 12px 16px;
-      border: 1px solid var(--line);
-      border-radius: 14px;
-      background: rgba(255,255,255,.88);
-    }
-    .cloud-access[hidden] { display: none; }
-    .cloud-access form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
-    .cloud-access input { min-height: 42px; padding: 8px 11px; border: 1px solid #cbdada; border-radius: 10px; font: inherit; }
-    .cloud-access button { min-height: 42px; padding: 8px 14px; border: 0; border-radius: 10px; color: #fff; background: var(--teal); font: inherit; font-weight: 700; cursor: pointer; }
-    .cloud-access [hidden] { display: none !important; }
-    .cloud-status { color: var(--ink-soft); font-size: .92rem; }
-
     .form-field { display: grid; gap: 7px; }
     .form-field.full { grid-column: 1 / -1; }
 
@@ -290,7 +272,6 @@
     .behavior-attachment-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; padding: 9px 11px; border: 1px solid var(--line); border-radius: 11px; background: #f7fbfa; }
     .behavior-attachment-row button { min-height: 36px; padding: 6px 11px; border: 1px solid #ead1d1; border-radius: 9px; color: #9a3f3f; background: #fff; font: inherit; cursor: pointer; }
     .behavior-attachment-hint { color: var(--ink-soft); font-size: .88rem; line-height: 1.6; }
-    .cloud-access:not([hidden]) { display: flex; }
     .entry-date { margin-top: 8px !important; color: #71858a !important; font-size: .88rem; }
     .poll-card-image { display: block; width: min(100%, 360px); max-height: 250px; margin-top: 12px; border: 1px solid var(--line); border-radius: 14px; background: #f7fafa; object-fit: cover; }
     .poll-card-summary { margin: 12px 0 0; color: var(--ink-soft); line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
@@ -327,6 +308,7 @@
     .behavior-dialog-details { margin: 0; color: var(--ink-soft); line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
 
     .rank-emblem { min-height: 48px; font-size: 2rem; line-height: 1.4; }
+    .rank-position { margin: 0; color: var(--ink-soft); font-size: .88rem; font-weight: 800; }
 
     .rank-title { margin: 0; color: var(--teal); font-size: 1.05rem; font-weight: 800; }
 
@@ -484,15 +466,6 @@
 </head>
 <body>
   <main class="page">
-    <section class="cloud-access" aria-label="حفظ وِصال السحابي" hidden>
-      <span class="cloud-status" id="cloud-status" role="status">جار الاتصال بالتخزين السحابي</span>
-      <form id="editor-login" hidden>
-        <label for="editor-email">دخول محررة وِصال</label>
-        <input id="editor-email" type="email" autocomplete="email" placeholder="البريد الإلكتروني" required>
-        <button type="submit">إرسال رابط الدخول</button>
-      </form>
-      <button id="editor-logout" type="button" hidden>تسجيل الخروج</button>
-    </section>
     <section class="home-page" id="home-page">
       <header class="brand-panel" aria-label="وِصال، الثانوية الرابعة والتسعون – مسارات">
         <div class="brand-copy">
@@ -689,13 +662,6 @@
       <div class="behavior-list" id="collection-list" aria-live="polite"></div>
     </section>
 
-    <section class="section-page" id="editor-access-page" aria-labelledby="editor-access-title" hidden>
-      <div class="section-page-head">
-        <h1 class="section-page-title" id="editor-access-title">دخول المحررة</h1>
-        <a class="back-link" href="#home">العودة للأقسام</a>
-      </div>
-      <div class="board-card"><p class="board-rule">مساحة مخصصة لإدارة محتوى وِصال.</p></div>
-    </section>
     <dialog class="behavior-dialog" id="record-view" aria-labelledby="record-view-title">
       <div class="behavior-dialog-inner">
         <div class="behavior-dialog-head">
@@ -713,9 +679,7 @@
     const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_nAwRsN7jKnlWvg1AM8UL9g_SnWAxFD-";
     const STORAGE_BUCKET = "wisal-files";
     const db = window.supabase?.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-    const cloudStatus = document.getElementById("cloud-status");
-    const editorLogin = document.getElementById("editor-login");
-    const editorLogout = document.getElementById("editor-logout");
+    const cloudStatus = null;
     let currentUser = null;
     let isEditor = false;
     let cloudReady = false;
@@ -805,7 +769,8 @@
     };
 
     function setCloudStatus(message) {
-      cloudStatus.textContent = message;
+      if (cloudStatus) cloudStatus.textContent = message;
+      else if (message.startsWith("تعذر")) console.warn(message);
     }
 
     function publicAttachment(path, details = {}) {
@@ -861,8 +826,6 @@
         if (error && error.code !== "PGRST116") throw error;
         isEditor = Boolean(data);
       }
-      editorLogin.hidden = isEditor;
-      editorLogout.hidden = !isEditor;
       document.querySelectorAll(".behavior-add-trigger, #collection-add").forEach((button) => { button.hidden = !isEditor; });
       if (isEditor) setCloudStatus("متصلة سحابيًا — دخول المحررة مفعّل");
       else if (currentUser) setCloudStatus("تم تسجيل الدخول، لكن هذا الحساب غير مفعّل للتحرير");
@@ -980,25 +943,22 @@
     function renderChallengeWinners(audience, rows) {
       const container = document.getElementById(audience === "student" ? "student-ranking" : "parent-ranking");
       container.replaceChildren();
-      if (!rows?.length) {
-        const empty = document.createElement("p");
-        empty.className = "behavior-empty";
-        empty.textContent = "ستظهر البطاقات بعد انتهاء التصويت على أول تحدٍ";
-        container.append(empty);
-        return;
-      }
       const medals = ["🥇", "🥈", "🥉"];
-      rows.forEach((row, index) => {
+      const positions = ["المركز الأول", "المركز الثاني", "المركز الثالث"];
+      const winners = Array.isArray(rows) ? rows.slice(0, 3) : [];
+      positions.forEach((position, index) => {
+        const row = winners[index];
         const card = document.createElement("article");
-        card.className = `rank-card ${["is-first", "is-second", "is-third"][index]}`;
+        card.className = `rank-card ${["is-first", "is-second", "is-third"][index]}${row ? "" : " is-empty"}`;
         const emblem = document.createElement("span"); emblem.className = "rank-emblem"; emblem.textContent = medals[index];
-        const title = document.createElement("h2"); title.className = "rank-title"; title.textContent = "الفائزة بتحدي الأسبوع";
-        const name = document.createElement("p"); name.className = "rank-name"; name.textContent = row.participant_name;
-        const activity = document.createElement("p"); activity.className = "rank-name"; activity.textContent = row.challenge_title;
+        const rank = document.createElement("p"); rank.className = "rank-position"; rank.textContent = position;
+        const title = document.createElement("h2"); title.className = "rank-title"; title.textContent = row ? "الفائزة بتحدي الأسبوع" : "بانتظار النتيجة";
+        const name = document.createElement("p"); name.className = "rank-name"; name.textContent = row?.participant_name || "ستظهر الفائزة بعد إغلاق التصويت";
+        const activity = document.createElement("p"); activity.className = "rank-name"; activity.textContent = row ? row.challenge_title : "—";
         const count = document.createElement("p"); count.className = "rank-count";
-        const label = document.createElement("span"); label.textContent = `عدد الأصوات · ${challengeDateLabel(row.scheduled_for)}`;
-        const value = document.createElement("strong"); value.textContent = arabicNumber(row.vote_count);
-        count.append(label, value); card.append(emblem, title, name, activity, count); container.append(card);
+        const label = document.createElement("span"); label.textContent = row ? `عدد الأصوات · ${challengeDateLabel(row.scheduled_for)}` : "عدد الأصوات";
+        const value = document.createElement("strong"); value.textContent = row ? arabicNumber(row.vote_count) : "—";
+        count.append(label, value); card.append(emblem, rank, title, name, activity, count); container.append(card);
       });
     }
     async function loadRecognitionBoard(audience) {
@@ -1156,10 +1116,7 @@
       const isStudentChallenges = route === "student-challenges";
       const isParentChallenges = route === "parent-challenges";
       const isBehavior = route === "positive-behavior";
-      const isEditorAccess = route === "editor-access";
-      document.querySelector(".cloud-access").hidden = !isEditorAccess;
-      document.getElementById("editor-access-page").hidden = !isEditorAccess;
-      homePage.hidden = Boolean(config || isStudentBoard || isParentBoard || isStudentChallenges || isParentChallenges || isBehavior || isEditorAccess);
+      homePage.hidden = Boolean(config || isStudentBoard || isParentBoard || isStudentChallenges || isParentChallenges || isBehavior);
       studentBoard.hidden = !isStudentBoard;
       parentBoard.hidden = !isParentBoard;
       document.getElementById("student-challenges").hidden = !isStudentChallenges;
@@ -1181,30 +1138,11 @@
           : isParentBoard ? "لوحة أولياء الأمور المتميزين | وِصال"
             : isStudentChallenges ? "تحديات الطالبات الأسبوعية | وِصال"
               : isParentChallenges ? "تحديات أولياء الأمور الأسبوعية | وِصال"
-                : isBehavior ? "السلوك الإيجابي | وِصال"
-                  : isEditorAccess ? "دخول المحررة | وِصال" : "وِصال | بوابة الشراكة الرقمية";
+                : isBehavior ? "السلوك الإيجابي | وِصال" : "وِصال | بوابة الشراكة الرقمية";
     }
     window.addEventListener("hashchange", showRoute);
     showRoute();
     initializeCloud().catch((error) => setCloudStatus("تعذر الاتصال بـ Supabase: " + error.message));
-    editorLogin.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      const email = document.getElementById("editor-email").value.trim();
-      setCloudStatus("جار إرسال رابط الدخول إلى البريد");
-      const { error } = await db.auth.signInWithOtp({
-        email,
-        options: { emailRedirectTo: window.location.origin + window.location.pathname + "#editor-access" }
-      });
-      setCloudStatus(error ? "تعذر إرسال رابط الدخول: " + error.message : "أرسلنا رابط دخول آمنًا إلى بريدك الإلكتروني");
-    });
-    editorLogout.addEventListener("click", async () => {
-      const { error } = await db.auth.signOut();
-      if (error) setCloudStatus("تعذر تسجيل الخروج: " + error.message);
-      else {
-        await refreshEditorAccess();
-        showRoute();
-      }
-    });
     db?.auth.onAuthStateChange((event) => {
       if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "TOKEN_REFRESHED") {
         window.setTimeout(async () => {
