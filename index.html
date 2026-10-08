@@ -10,15 +10,15 @@
   <style>
     :root {
       color-scheme: light;
-      --ink: #123d4b;
-      --ink-soft: #45646c;
-      --teal: #0d5366;
-      --teal-mid: #187889;
-      --green: #3d9b73;
-      --paper: #f5f8f8;
-      --line: #dce8e8;
-      --card: #ffffff;
-      --shadow: 0 12px 30px rgba(15, 58, 70, .075);
+      --ink: #103746;
+      --ink-soft: #3d5f68;
+      --teal: #0a4c5d;
+      --teal-mid: #176f7e;
+      --green: #378766;
+      --paper: #eaf2f1;
+      --line: #ccdddd;
+      --card: #fcfefe;
+      --shadow: 0 12px 30px rgba(15, 58, 70, .11);
     }
 
     * { box-sizing: border-box; }
@@ -29,8 +29,9 @@
       min-height: 100vh;
       color: var(--ink);
       background:
-        radial-gradient(ellipse at 5% 5%, rgba(67, 157, 125, .08), transparent 34rem),
-        radial-gradient(ellipse at 98% 45%, rgba(31, 121, 137, .055), transparent 36rem),
+        radial-gradient(ellipse at 4% 4%, rgba(61, 151, 117, .18), transparent 34rem),
+        radial-gradient(ellipse at 98% 42%, rgba(27, 113, 132, .13), transparent 36rem),
+        radial-gradient(ellipse at 48% 100%, rgba(77, 147, 121, .08), transparent 42rem),
         var(--paper);
       font-family: "Noto Sans Arabic", "Noto Kufi Arabic", Tahoma, Arial, sans-serif;
     }
@@ -50,8 +51,16 @@
       overflow: hidden;
       border: 1px solid rgba(20, 103, 117, .14);
       border-radius: 26px;
-      background: linear-gradient(118deg, #e5f4f4 0%, #d6efec 48%, #e3f3e8 100%);
+      background: linear-gradient(118deg, #cce7e6 0%, #c2e1dd 48%, #d0e7d5 100%);
       box-shadow: var(--shadow);
+    }
+
+    .brand-copy {
+      display: grid;
+      justify-items: center;
+      gap: 5px;
+      width: 100%;
+      text-align: center;
     }
 
     .brand-panel img {
@@ -59,6 +68,15 @@
       width: min(650px, 100%);
       max-height: 190px;
       object-fit: contain;
+    }
+
+    .brand-subtitle {
+      margin: 0;
+      color: #174b59;
+      font-size: clamp(.7rem, 3.2vw, .95rem);
+      font-weight: 700;
+      line-height: 1.6;
+      white-space: nowrap;
     }
 
     .sections {
@@ -180,6 +198,7 @@
       border-radius: 14px;
       background: rgba(255,255,255,.88);
     }
+    .cloud-access[hidden] { display: none; }
     .cloud-access form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
     .cloud-access input { min-height: 42px; padding: 8px 11px; border: 1px solid #cbdada; border-radius: 10px; font: inherit; }
     .cloud-access button { min-height: 42px; padding: 8px 14px; border: 0; border-radius: 10px; color: #fff; background: var(--teal); font: inherit; font-weight: 700; cursor: pointer; }
@@ -265,6 +284,10 @@
     .entry-attachment img { display: block; width: min(100%, 260px); max-height: 220px; object-fit: contain; border: 1px solid var(--line); border-radius: 12px; background: #f7fafa; }
     .entry-attachment a { color: var(--teal); font-weight: 700; overflow-wrap: anywhere; }
     .entry-date { margin-top: 8px !important; color: #71858a !important; font-size: .88rem; }
+    .poll-card-image { display: block; width: min(100%, 360px); max-height: 250px; margin-top: 12px; border: 1px solid var(--line); border-radius: 14px; background: #f7fafa; object-fit: cover; }
+    .poll-card-summary { margin: 12px 0 0; color: var(--ink-soft); line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .poll-card-link { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; margin-top: 14px; padding: 8px 16px; border-radius: 11px; color: #fff; background: linear-gradient(110deg, var(--teal), var(--green)); font-weight: 700; text-decoration: none; }
+    .poll-card-link:focus-visible { outline: 3px solid rgba(24, 120, 137, .35); outline-offset: 3px; }
 
     .behavior-list { display: grid; gap: 12px; margin-top: 16px; }
 
@@ -299,6 +322,42 @@
 
     .rank-title { margin: 0; color: var(--teal); font-size: 1.05rem; font-weight: 800; }
 
+    .rank-card.is-first { border-color: #e5d29d; background: linear-gradient(160deg, #fffdf6, #f8f0d9); box-shadow: 0 10px 24px rgba(149, 117, 38, .12); }
+    .rank-card.is-second { border-color: #c9d0d5; background: linear-gradient(160deg, #fff, #edf1f3); box-shadow: 0 10px 24px rgba(99, 115, 125, .10); }
+    .rank-card.is-third { border-color: #ce9b76; background: linear-gradient(160deg, #fffaf6, #f3e2d4); box-shadow: 0 10px 24px rgba(145, 89, 54, .11); }
+    .rank-card.is-second .rank-title { color: #64727a; }
+    .rank-card.is-third .rank-title { color: #8b5737; }
+    .challenge-admin { margin: 14px 0 18px; }
+    .challenge-admin[hidden], .challenge-form[hidden] { display: none !important; }
+    .challenge-form { margin-bottom: 18px; }
+    .challenge-list { display: grid; gap: 15px; margin-top: 14px; }
+    .challenge-card { padding: 18px; border: 1px solid var(--line); border-radius: 18px; background: linear-gradient(145deg,#fff,#f7fbfa); }
+    .challenge-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+    .challenge-title { margin: 0 0 7px; color: var(--ink); font-size: 1.08rem; line-height: 1.6; }
+    .challenge-description { margin: 0; color: var(--ink-soft); line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .challenge-meta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+    .challenge-meta span { padding: 7px 10px; border: 1px solid #e1ecea; border-radius: 10px; color: var(--ink-soft); background: #f6faf9; font-size: .86rem; }
+    .challenge-status { flex: 0 0 auto; padding: 7px 10px; border-radius: 999px; color: #226c4b; background: #e4f5eb; font-size: .82rem; font-weight: 800; }
+    .challenge-status.is-off, .challenge-status.is-closed { color: #5d7075; background: #edf0f1; }
+    .challenge-status.is-voting { color: #785915; background: #fbf2d8; }
+    .challenge-meter { display: flex; justify-content: space-between; gap: 8px; margin: 15px 0 7px; color: var(--ink-soft); font-size: .9rem; font-weight: 700; }
+    .challenge-progress { height: 8px; overflow: hidden; border-radius: 999px; background: #e6efed; }
+    .challenge-progress i { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg,var(--green),#55b48d); }
+    .challenge-timer { margin: 12px 0; color: #785915; font-weight: 800; font-variant-numeric: tabular-nums; }
+    .challenge-entry-form { display: grid; gap: 10px; margin-top: 14px; }
+    .challenge-entry-form input, .challenge-entry-form textarea { width: 100%; min-height: 46px; padding: 11px 13px; border: 1px solid var(--line); border-radius: 12px; color: var(--ink); background: #fff; font: inherit; }
+    .challenge-entry-form textarea { min-height: 94px; resize: vertical; }
+    .challenge-submissions { display: grid; gap: 10px; margin-top: 14px; }
+    .challenge-submission { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--line); border-radius: 14px; background: #fff; }
+    .challenge-submission h3 { margin: 0 0 5px; font-size: .97rem; }
+    .challenge-submission p { margin: 0; color: var(--ink-soft); line-height: 1.7; overflow-wrap: anywhere; }
+    .challenge-vote { display: grid; min-width: 62px; justify-items: center; gap: 3px; padding: 8px; border: 0; border-radius: 13px; color: var(--teal); background: #e7f3f0; font: inherit; font-weight: 800; cursor: pointer; }
+    .challenge-vote span { font-size: 1.2rem; line-height: 1; }
+    .challenge-vote:disabled { opacity: .55; cursor: wait; }
+    .challenge-admin-actions { display: flex; justify-content: flex-end; margin-top: 12px; }
+    .challenge-toggle { padding: 8px 12px; border: 1px solid var(--line); border-radius: 11px; color: var(--teal); background: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+    .challenge-winner-votes { margin-top: 7px; color: var(--teal); font-size: .9rem; font-weight: 800; }
+
     .rank-name { margin: 0; color: var(--ink-soft); font-size: .96rem; line-height: 1.7; }
 
     .rank-count {
@@ -327,7 +386,7 @@
       border: 1px solid var(--line);
       border-radius: 20px;
       color: inherit;
-      background: var(--card);
+      background: linear-gradient(135deg, rgba(255,255,255,.98), rgba(241,249,246,.96));
       box-shadow: 0 6px 18px rgba(15, 58, 70, .045);
       text-decoration: none;
       transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
@@ -370,7 +429,7 @@
       border: 1px solid rgba(28, 124, 135, .13);
       border-radius: 17px;
       color: var(--teal);
-      background: linear-gradient(145deg, #e9f5f5, #e9f5ed);
+      background: linear-gradient(145deg, #d8eded, #dceddf);
     }
 
     .card-icon svg { width: 27px; height: 27px; }
@@ -391,7 +450,7 @@
     @media (max-width: 760px) {
       .page { width: min(100% - 28px, 600px); padding-block: 16px 30px; }
       .brand-panel { min-height: 142px; padding: 15px 18px; border-radius: 21px; }
-      .brand-panel img { max-height: 145px; }
+      .brand-panel img { max-height: 125px; }
       .sections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 17px; }
       .section-card { min-height: 118px; padding: 15px; gap: 12px; border-radius: 17px; }
       .card-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 14px; }
@@ -417,7 +476,7 @@
 </head>
 <body>
   <main class="page">
-    <section class="cloud-access" aria-label="حفظ وِصال السحابي">
+    <section class="cloud-access" aria-label="حفظ وِصال السحابي" hidden>
       <span class="cloud-status" id="cloud-status" role="status">جار الاتصال بالتخزين السحابي</span>
       <form id="editor-login" hidden>
         <label for="editor-email">دخول محررة وِصال</label>
@@ -428,17 +487,28 @@
     </section>
     <section class="home-page" id="home-page">
       <header class="brand-panel" aria-label="وِصال، الثانوية الرابعة والتسعون – مسارات">
-        <img src="wisal-logo.png" alt="وِصال — الثانوية الرابعة والتسعون، مسارات">
+        <div class="brand-copy">
+          <img src="wisal-logo.png" alt="وِصال — الثانوية الرابعة والتسعون، مسارات">
+          <p class="brand-subtitle">البوابة الرقمية | للشراكة مع أولياء الأمور والطالبات</p>
+        </div>
       </header>
 
       <nav class="sections" aria-label="أقسام وِصال">
-      <a class="section-card" href="#student-board" aria-label="فتح لوحة الطلاب المتميزين">
+      <a class="section-card" href="#student-board" aria-label="فتح لوحة الطالبات المتميزات">
         <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 14.6 8l5.1 1.1-3.5 3.8.5 5.2-4.7-2.1-4.7 2.1.5-5.2-3.5-3.8L9.4 8 12 3.5Z"/><path d="M8.5 20h7"/></svg></span>
-        <h2 class="card-title">لوحة الطلاب المتميزين</h2>
+        <h2 class="card-title">لوحة الطالبات المتميزات</h2>
       </a>
       <a class="section-card" href="#parent-board" aria-label="فتح لوحة أولياء الأمور المتميزين">
         <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.8 19c.4-3 2.1-4.6 5.2-4.6s4.8 1.6 5.2 4.6M14.7 14.8c2.9-.7 5 .8 5.5 3.7"/></svg></span>
         <h2 class="card-title">لوحة أولياء الأمور المتميزين</h2>
+      </a>
+      <a class="section-card" href="#student-challenges" aria-label="فتح تحديات الطالبات الأسبوعية">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 5 13h6l-1 9 9-12h-6l1-8Z"/></svg></span>
+        <h2 class="card-title">تحديات الطالبات الأسبوعية</h2>
+      </a>
+      <a class="section-card" href="#parent-challenges" aria-label="فتح تحديات أولياء الأمور الأسبوعية">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M5.6 6.6l2.1 2.1M3 13h3M18 13h3M16.3 8.7l2.1-2.1"/><path d="M7 18h10M9 21h6M7 15a5 5 0 1 1 10 0c0 1.2-.5 2.1-1.5 3H8.5C7.5 17.1 7 16.2 7 15Z"/></svg></span>
+        <h2 class="card-title">تحديات أولياء الأمور الأسبوعية</h2>
       </a>
       <a class="section-card" href="#positive-behavior" aria-label="فتح السلوك الإيجابي">
         <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 19 6v5.2c0 4.4-2.8 7.5-7 9.3-4.2-1.8-7-4.9-7-9.3V6l7-2.5Z"/><path d="m8.8 12.1 2.1 2.1 4.4-4.5"/></svg></span>
@@ -472,37 +542,22 @@
         <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/><path d="M12 9v6M9 12h6"/></svg></span>
         <h2 class="card-title">العمل التطوعي</h2>
       </a>
+      <a class="section-card" href="#opinion-polls" aria-label="فتح استطلاع الرأي">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h14v15H5z"/><path d="M8 9h8M8 13h5"/><path d="m14 16 1.5 1.5L19 14"/></svg></span>
+        <h2 class="card-title">استطلاع الرأي</h2>
+      </a>
       </nav>
     </section>
 
     <section class="section-page" id="student-board" aria-labelledby="student-board-title" hidden>
       <div class="section-page-head">
-        <h1 class="section-page-title" id="student-board-title">لوحة الطلاب المتميزين</h1>
+        <h1 class="section-page-title" id="student-board-title">لوحة الطالبات المتميزات</h1>
         <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
       </div>
       <div class="board-card">
-        <p class="board-rule">يُحتسب التميز بعدد المشاركات المنفذة، ويُرشَّح الاسم الأعلى مشاركة</p>
+        <p class="board-rule">بطاقات الطالبات الفائزات في التحديات الأسبوعية، مرتبة من الأحدث</p>
         <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
-          <div class="ranking-cards">
-            <article class="rank-card">
-              <span class="rank-emblem" aria-hidden="true">🥇</span>
-              <h2 class="rank-title">المركز الأول</h2>
-              <p class="rank-name">بانتظار الترشيح</p>
-              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
-            </article>
-            <article class="rank-card">
-              <span class="rank-emblem" aria-hidden="true">🥈</span>
-              <h2 class="rank-title">المركز الثاني</h2>
-              <p class="rank-name">بانتظار الترشيح</p>
-              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
-            </article>
-            <article class="rank-card">
-              <span class="rank-emblem" aria-hidden="true">🥉</span>
-              <h2 class="rank-title">المركز الثالث</h2>
-              <p class="rank-name">بانتظار الترشيح</p>
-              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
-            </article>
-          </div>
+          <div class="ranking-cards" id="student-ranking" aria-live="polite"><p class="behavior-empty">جارٍ تحميل البطاقات</p></div>
         </div>
       </div>
     </section>
@@ -513,29 +568,50 @@
         <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
       </div>
       <div class="board-card">
-        <p class="board-rule">يُحتسب التميز بعدد المشاركات المنفذة، ويُرشَّح الاسم الأعلى مشاركة</p>
+        <p class="board-rule">بطاقات أولياء الأمور الفائزين في التحديات الأسبوعية، مرتبة من الأحدث</p>
         <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
-          <div class="ranking-cards">
-            <article class="rank-card">
-              <span class="rank-emblem" aria-hidden="true">🥇</span>
-              <h2 class="rank-title">المركز الأول</h2>
-              <p class="rank-name">بانتظار الترشيح</p>
-              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
-            </article>
-            <article class="rank-card">
-              <span class="rank-emblem" aria-hidden="true">🥈</span>
-              <h2 class="rank-title">المركز الثاني</h2>
-              <p class="rank-name">بانتظار الترشيح</p>
-              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
-            </article>
-            <article class="rank-card">
-              <span class="rank-emblem" aria-hidden="true">🥉</span>
-              <h2 class="rank-title">المركز الثالث</h2>
-              <p class="rank-name">بانتظار الترشيح</p>
-              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
-            </article>
-          </div>
+          <div class="ranking-cards" id="parent-ranking" aria-live="polite"><p class="behavior-empty">جارٍ تحميل البطاقات</p></div>
         </div>
+      </div>
+    </section>
+
+    <section class="section-page" id="student-challenges" aria-labelledby="student-challenges-title" hidden>
+      <div class="section-page-head">
+        <h1 class="section-page-title" id="student-challenges-title">تحديات الطالبات الأسبوعية</h1>
+        <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
+      </div>
+      <div class="board-card">
+        <p class="board-rule">تحدٍ جديد كل يوم سبت الساعة ١ ظهرًا. تُحفظ التحديات السابقة في سجل تراكمي</p>
+        <section class="challenge-admin" id="student-challenge-admin" hidden>
+          <button class="form-submit" id="student-challenge-add" type="button">إضافة تحدٍ أسبوعي</button>
+          <form class="behavior-form challenge-form" id="student-challenge-form" hidden>
+            <div class="form-field"><label for="student-challenge-title">عنوان التحدي</label><input id="student-challenge-title" maxlength="140" required></div>
+            <div class="form-field"><label for="student-challenge-date">تاريخ السبت</label><input id="student-challenge-date" type="date" required></div>
+            <div class="form-field full"><label for="student-challenge-description">وصف التحدي</label><textarea id="student-challenge-description" maxlength="1200" required></textarea></div>
+            <div class="form-actions full"><button class="form-submit" type="submit">حفظ التحدي</button><button class="form-cancel" id="student-challenge-cancel" type="button">إلغاء</button></div>
+          </form>
+        </section>
+        <div class="challenge-list" id="student-challenge-list" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="section-page" id="parent-challenges" aria-labelledby="parent-challenges-title" hidden>
+      <div class="section-page-head">
+        <h1 class="section-page-title" id="parent-challenges-title">تحديات أولياء الأمور الأسبوعية</h1>
+        <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
+      </div>
+      <div class="board-card">
+        <p class="board-rule">تحدٍ جديد كل يوم سبت الساعة ١ ظهرًا. تُحفظ التحديات السابقة في سجل تراكمي</p>
+        <section class="challenge-admin" id="parent-challenge-admin" hidden>
+          <button class="form-submit" id="parent-challenge-add" type="button">إضافة تحدٍ أسبوعي</button>
+          <form class="behavior-form challenge-form" id="parent-challenge-form" hidden>
+            <div class="form-field"><label for="parent-challenge-title">عنوان التحدي</label><input id="parent-challenge-title" maxlength="140" required></div>
+            <div class="form-field"><label for="parent-challenge-date">تاريخ السبت</label><input id="parent-challenge-date" type="date" required></div>
+            <div class="form-field full"><label for="parent-challenge-description">وصف التحدي</label><textarea id="parent-challenge-description" maxlength="1200" required></textarea></div>
+            <div class="form-actions full"><button class="form-submit" type="submit">حفظ التحدي</button><button class="form-cancel" id="parent-challenge-cancel" type="button">إلغاء</button></div>
+          </form>
+        </section>
+        <div class="challenge-list" id="parent-challenge-list" aria-live="polite"></div>
       </div>
     </section>
 
@@ -656,7 +732,7 @@
         { name: "honor", label: "عنوان التكريم", type: "text" },
         { name: "details", label: "تفاصيل التكريم", type: "textarea" }
       ] },
-      "success-stories": { title: "قصص النجاح - التحصيلي والقدرات وSTEP", item: "قصة نجاح", empty: "لا توجد قصص نجاح مضافة حتى الآن", titleField: "student", fields: [
+      "success-stories": { title: "قصص النجاح", item: "قصة نجاح", empty: "لا توجد قصص نجاح مضافة حتى الآن", titleField: "student", fields: [
         { name: "student", label: "اسم الطالبة", type: "text" },
         { name: "exam", label: "نوع قصة النجاح", type: "select", options: ["تفوق دراسي", "التحصيلي", "القدرات", "STEP"] },
         { name: "score", label: "الدرجة (اختياري)", type: "text", required: false },
@@ -673,6 +749,11 @@
         { name: "participants", label: "اسم الطالبة أو الفريق", type: "text" },
         { name: "hours", label: "الساعات التطوعية (اختياري)", type: "number", required: false, min: 0 },
         { name: "details", label: "تفاصيل العمل", type: "textarea" }
+      ] },
+      "opinion-polls": { title: "استطلاع الرأي", item: "بطاقة استطلاع", empty: "لا توجد استطلاعات رأي مضافة حتى الآن", titleField: "title", imageOnly: true, fields: [
+        { name: "title", label: "عنوان الاستطلاع", type: "text" },
+        { name: "summary", label: "ملخص الاستطلاع", type: "textarea" },
+        { name: "pollUrl", label: "رابط الاستطلاع", type: "url" }
       ] }
     };
     const collectionEntries = new Map(Object.keys(collectionConfigs).map((key) => [key, []]));
@@ -749,6 +830,9 @@
     async function uploadAttachment(section, file) {
       if (!file) return null;
       if (file.size > 15 * 1024 * 1024) throw new Error("حجم المرفق يتجاوز 15 ميجابايت");
+      if (section === "opinion-polls" && !["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+        throw new Error("صورة بطاقة الاستطلاع يجب أن تكون بصيغة JPG أو PNG أو WebP");
+      }
       const safeName = file.name.replace(/[^\p{L}\p{N}._-]+/gu, "-").slice(-100) || "attachment";
       const path = section + "/" + crypto.randomUUID() + "-" + safeName;
       const { error } = await db.storage.from(STORAGE_BUCKET).upload(path, file, { upsert: false, contentType: file.type || "application/octet-stream" });
@@ -803,17 +887,217 @@
       showRoute();
     }
 
+    const challengeConfigs = {
+      student: { audience: "student", sectionId: "student-challenges", listId: "student-challenge-list", adminId: "student-challenge-admin", addId: "student-challenge-add", formId: "student-challenge-form", cancelId: "student-challenge-cancel", titleId: "student-challenge-title", descriptionId: "student-challenge-description", dateId: "student-challenge-date", nameLabel: "اسم الطالبة" },
+      parent: { audience: "parent", sectionId: "parent-challenges", listId: "parent-challenge-list", adminId: "parent-challenge-admin", addId: "parent-challenge-add", formId: "parent-challenge-form", cancelId: "parent-challenge-cancel", titleId: "parent-challenge-title", descriptionId: "parent-challenge-description", dateId: "parent-challenge-date", nameLabel: "اسم ولي الأمر" }
+    };
+    const challengeTimerIntervals = new Map();
+    const arabicNumber = (value) => new Intl.NumberFormat("ar-SA").format(Number(value) || 0);
+    const challengeOpeningTime = (date) => new Date(`${date}T10:00:00.000Z`).getTime();
+    function challengeDateLabel(date) {
+      const value = new Date(`${date}T12:00:00+03:00`);
+      return new Intl.DateTimeFormat("ar-SA", { timeZone: "Asia/Riyadh", day: "numeric", month: "long", year: "numeric" }).format(value);
+    }
+    function challengeCurrentState(challenge) {
+      if (!challenge.is_enabled) return "غير متاح";
+      const now = Date.now();
+      if (now < challengeOpeningTime(challenge.scheduled_for)) return "غير متاح";
+      if (challenge.submission_closed_at) {
+        return now < new Date(challenge.voting_ends_at).getTime() ? "التصويت متاح" : "مغلق";
+      }
+      return challenge.submissions.length < 3 ? "استقبال المشاركات متاح" : "مغلق";
+    }
+    function renderChallengeWinners(audience, rows) {
+      const container = document.getElementById(audience === "student" ? "student-ranking" : "parent-ranking");
+      container.replaceChildren();
+      if (!rows?.length) {
+        const empty = document.createElement("p");
+        empty.className = "behavior-empty";
+        empty.textContent = "ستظهر البطاقات بعد انتهاء التصويت على أول تحدٍ";
+        container.append(empty);
+        return;
+      }
+      const medals = ["🥇", "🥈", "🥉"];
+      rows.forEach((row, index) => {
+        const card = document.createElement("article");
+        card.className = `rank-card ${["is-first", "is-second", "is-third"][index]}`;
+        const emblem = document.createElement("span"); emblem.className = "rank-emblem"; emblem.textContent = medals[index];
+        const title = document.createElement("h2"); title.className = "rank-title"; title.textContent = "الفائزة بتحدي الأسبوع";
+        const name = document.createElement("p"); name.className = "rank-name"; name.textContent = row.participant_name;
+        const activity = document.createElement("p"); activity.className = "rank-name"; activity.textContent = row.challenge_title;
+        const count = document.createElement("p"); count.className = "rank-count";
+        const label = document.createElement("span"); label.textContent = `عدد الأصوات · ${challengeDateLabel(row.scheduled_for)}`;
+        const value = document.createElement("strong"); value.textContent = arabicNumber(row.vote_count);
+        count.append(label, value); card.append(emblem, title, name, activity, count); container.append(card);
+      });
+    }
+    async function loadRecognitionBoard(audience) {
+      const { data, error } = await db.rpc("get_wisal_challenge_winners", { p_audience: audience });
+      if (error) {
+        setCloudStatus("تعذر تحميل بطاقات المتميزين: " + error.message);
+        return;
+      }
+      renderChallengeWinners(audience, data || []);
+    }
+    function addChallengeMeta(container, text) {
+      const item = document.createElement("span"); item.textContent = text; container.append(item);
+    }
+    function renderChallengeCard(audience, challenge) {
+      const state = challengeCurrentState(challenge);
+      const card = document.createElement("article"); card.className = "challenge-card";
+      const head = document.createElement("div"); head.className = "challenge-head";
+      const copy = document.createElement("div");
+      const title = document.createElement("h2"); title.className = "challenge-title"; title.textContent = challenge.title;
+      const description = document.createElement("p"); description.className = "challenge-description"; description.textContent = challenge.description;
+      copy.append(title, description);
+      const badge = document.createElement("span"); badge.className = "challenge-status";
+      badge.textContent = state;
+      if (state === "غير متاح" || state === "مغلق") badge.classList.add("is-off");
+      if (state === "التصويت متاح") badge.classList.add("is-voting");
+      head.append(copy, badge);
+      const meta = document.createElement("div"); meta.className = "challenge-meta";
+      addChallengeMeta(meta, "اليوم: السبت");
+      addChallengeMeta(meta, `التاريخ: ${challengeDateLabel(challenge.scheduled_for)}`);
+      addChallengeMeta(meta, "يفتح الساعة ١:٠٠ ظهرًا");
+      card.append(head, meta);
+      if (isEditor) {
+        const adminActions = document.createElement("div"); adminActions.className = "challenge-admin-actions";
+        const toggle = document.createElement("button"); toggle.type = "button"; toggle.className = "challenge-toggle";
+        toggle.textContent = challenge.is_enabled ? "تحويل الحالة إلى غير متاح" : "إتاحة التحدي";
+        toggle.addEventListener("click", async () => {
+          toggle.disabled = true;
+          const { error } = await db.from("wisal_weekly_challenges").update({ is_enabled: !challenge.is_enabled }).eq("id", challenge.challenge_id);
+          if (error) window.alert("تعذر تغيير الحالة: " + error.message);
+          await loadChallengeSection(audience);
+        });
+        adminActions.append(toggle); card.append(adminActions);
+      }
+      const meter = document.createElement("div"); meter.className = "challenge-meter";
+      const meterLabel = document.createElement("span"); meterLabel.textContent = "المشاركات";
+      const meterCount = document.createElement("span"); meterCount.textContent = `${arabicNumber(challenge.submissions.length)} من ٣`;
+      meter.append(meterLabel, meterCount); card.append(meter);
+      const progress = document.createElement("div"); progress.className = "challenge-progress";
+      const progressValue = document.createElement("i"); progressValue.style.width = `${Math.min(challenge.submissions.length, 3) / 3 * 100}%`; progress.append(progressValue); card.append(progress);
+      const submissionOpen = challenge.is_enabled && Date.now() >= challengeOpeningTime(challenge.scheduled_for) && !challenge.submission_closed_at && challenge.submissions.length < 3;
+      const votingOpen = challenge.is_enabled && challenge.submission_closed_at && Date.now() < new Date(challenge.voting_ends_at).getTime();
+      if (votingOpen) {
+        const timer = document.createElement("p"); timer.className = "challenge-timer"; card.append(timer);
+        const timerId = `${challenge.challenge_id}`;
+        if (challengeTimerIntervals.has(timerId)) clearInterval(challengeTimerIntervals.get(timerId));
+        const paintTimer = async () => {
+          const seconds = Math.max(0, Math.ceil((new Date(challenge.voting_ends_at).getTime() - Date.now()) / 1000));
+          const hours = String(Math.floor(seconds / 3600)).padStart(2, "0");
+          const minutes = String(Math.floor(seconds % 3600 / 60)).padStart(2, "0");
+          const remainder = String(seconds % 60).padStart(2, "0");
+          timer.textContent = seconds ? `ينتهي التصويت خلال ${hours}:${minutes}:${remainder}` : "انتهى التصويت";
+          if (!seconds) { clearInterval(challengeTimerIntervals.get(timerId)); challengeTimerIntervals.delete(timerId); await loadChallengeSection(audience); }
+        };
+        paintTimer(); challengeTimerIntervals.set(timerId, setInterval(paintTimer, 1000));
+      }
+      const entries = document.createElement("div"); entries.className = "challenge-submissions";
+      challenge.submissions.forEach((submission) => {
+        const item = document.createElement("article"); item.className = "challenge-submission";
+        const entryText = document.createElement("div");
+        const name = document.createElement("h3"); name.textContent = submission.participant_name;
+        const response = document.createElement("p"); response.textContent = submission.response_text;
+        const voteCount = document.createElement("p"); voteCount.className = "challenge-winner-votes"; voteCount.textContent = `عدد الأصوات: ${arabicNumber(submission.vote_count)}`;
+        entryText.append(name, response, voteCount);
+        item.append(entryText);
+        if (votingOpen) {
+          const vote = document.createElement("button"); vote.type = "button"; vote.className = "challenge-vote";
+          vote.setAttribute("aria-label", `التصويت لمشاركة ${submission.participant_name}`);
+          const icon = document.createElement("span"); icon.textContent = "♡";
+          const count = document.createElement("strong"); count.textContent = arabicNumber(submission.vote_count);
+          vote.append(icon, count);
+          vote.addEventListener("click", async () => {
+            vote.disabled = true;
+            const { data, error } = await db.rpc("cast_wisal_challenge_vote", { p_challenge_id: challenge.challenge_id, p_submission_id: submission.id });
+            if (error) { window.alert("تعذر تسجيل التصويت: " + error.message); vote.disabled = false; return; }
+            count.textContent = arabicNumber(data);
+            vote.disabled = false;
+          });
+          item.append(vote);
+        }
+        entries.append(item);
+      });
+      card.append(entries);
+      if (submissionOpen) {
+        const form = document.createElement("form"); form.className = "challenge-entry-form";
+        const name = document.createElement("input"); name.name = "participantName"; name.maxLength = 100; name.placeholder = audience === "student" ? "اسم الطالبة" : "اسم ولي الأمر"; name.required = true;
+        const response = document.createElement("textarea"); response.name = "responseText"; response.maxLength = 1200; response.placeholder = "اكتبي إجابتك أو مشاركتك"; response.required = true;
+        const submit = document.createElement("button"); submit.className = "form-submit"; submit.type = "submit"; submit.textContent = "إرسال المشاركة";
+        form.append(name, response, submit);
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault(); submit.disabled = true;
+          const { error } = await db.rpc("submit_wisal_challenge_entry", { p_challenge_id: challenge.challenge_id, p_participant_name: name.value.trim(), p_response_text: response.value.trim() });
+          if (error) { window.alert("تعذر إرسال المشاركة: " + error.message); submit.disabled = false; return; }
+          window.alert("وصلت مشاركتك، شكرًا لك"); await loadChallengeSection(audience);
+        });
+        card.append(form);
+      }
+      return card;
+    }
+    async function loadChallengeSection(audience) {
+      const config = challengeConfigs[audience];
+      const list = document.getElementById(config.listId);
+      document.getElementById(config.adminId).hidden = !isEditor;
+      const { data, error } = await db.rpc("get_wisal_weekly_challenges", { p_audience: audience });
+      list.replaceChildren();
+      if (error) {
+        const message = document.createElement("p"); message.className = "behavior-empty"; message.textContent = "تعذر تحميل التحديات. تحققي من تطبيق ملف قاعدة البيانات"; list.append(message);
+        setCloudStatus("تعذر تحميل التحديات الأسبوعية: " + error.message); return;
+      }
+      if (!data?.length) {
+        const message = document.createElement("p"); message.className = "behavior-empty"; message.textContent = "لا توجد تحديات مضافة بعد"; list.append(message); return;
+      }
+      data.forEach((challenge) => list.append(renderChallengeCard(audience, challenge)));
+    }
+    function bindChallengeAdmin(audience) {
+      const config = challengeConfigs[audience];
+      const form = document.getElementById(config.formId);
+      document.getElementById(config.addId).addEventListener("click", () => { form.hidden = false; document.getElementById(config.addId).hidden = true; });
+      document.getElementById(config.cancelId).addEventListener("click", () => { form.reset(); form.hidden = true; document.getElementById(config.addId).hidden = false; });
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const date = document.getElementById(config.dateId).value;
+        const scheduled = new Date(`${date}T12:00:00+03:00`);
+        if (!date || scheduled.getUTCDay() !== 6) { window.alert("اختاري تاريخ يوم السبت"); return; }
+        const submit = form.querySelector('button[type="submit"]'); submit.disabled = true;
+        const { error } = await db.from("wisal_weekly_challenges").insert({
+          audience,
+          title: document.getElementById(config.titleId).value.trim(),
+          description: document.getElementById(config.descriptionId).value.trim(),
+          scheduled_for: date,
+          created_by: currentUser.id
+        });
+        if (error) window.alert(error.code === "23505" ? "يوجد تحدٍ مسجل لهذه الفئة في هذا السبت" : "تعذر حفظ التحدي: " + error.message);
+        else { form.reset(); form.hidden = true; document.getElementById(config.addId).hidden = false; await loadChallengeSection(audience); setCloudStatus("حُفظ التحدي في السجل التراكمي"); }
+        submit.disabled = false;
+      });
+    }
+    bindChallengeAdmin("student");
+    bindChallengeAdmin("parent");
+
     function showRoute() {
       const route = window.location.hash.slice(1);
       const config = collectionConfigs[route];
       const isStudentBoard = route === "student-board";
       const isParentBoard = route === "parent-board";
+      const isStudentChallenges = route === "student-challenges";
+      const isParentChallenges = route === "parent-challenges";
       const isBehavior = route === "positive-behavior";
-      homePage.hidden = Boolean(config || isStudentBoard || isParentBoard || isBehavior);
+      document.querySelector(".cloud-access").hidden = !route || route === "home";
+      homePage.hidden = Boolean(config || isStudentBoard || isParentBoard || isStudentChallenges || isParentChallenges || isBehavior);
       studentBoard.hidden = !isStudentBoard;
       parentBoard.hidden = !isParentBoard;
+      document.getElementById("student-challenges").hidden = !isStudentChallenges;
+      document.getElementById("parent-challenges").hidden = !isParentChallenges;
       positiveBehavior.hidden = !isBehavior;
       collectionPage.hidden = !config;
+      if (cloudReady && isStudentBoard) loadRecognitionBoard("student");
+      if (cloudReady && isParentBoard) loadRecognitionBoard("parent");
+      if (cloudReady && isStudentChallenges) loadChallengeSection("student");
+      if (cloudReady && isParentChallenges) loadChallengeSection("parent");
       if (config) {
         collectionTitle.textContent = config.title;
         collectionAdd.textContent = `إضافة ${config.item}`;
@@ -821,9 +1105,11 @@
         renderCollection(route, config);
       }
       document.title = config ? `${config.title} | وِصال`
-        : isStudentBoard ? "لوحة الطلاب المتميزين | وِصال"
+        : isStudentBoard ? "لوحة الطالبات المتميزات | وِصال"
           : isParentBoard ? "لوحة أولياء الأمور المتميزين | وِصال"
-            : isBehavior ? "السلوك الإيجابي | وِصال" : "وِصال | بوابة الشراكة الرقمية";
+            : isStudentChallenges ? "تحديات الطالبات الأسبوعية | وِصال"
+              : isParentChallenges ? "تحديات أولياء الأمور الأسبوعية | وِصال"
+                : isBehavior ? "السلوك الإيجابي | وِصال" : "وِصال | بوابة الشراكة الرقمية";
     }
     window.addEventListener("hashchange", showRoute);
     showRoute();
@@ -886,17 +1172,17 @@
       recordView.showModal();
     }
 
-    function makeFileInput() {
+    function makeFileInput(config) {
       const wrapper = document.createElement("div");
       wrapper.className = "form-field full";
       const label = document.createElement("label");
       label.htmlFor = "collection-attachment";
-      label.textContent = "مرفق صورة أو ملف (اختياري)";
+      label.textContent = config.imageOnly ? "صورة بطاقة الاستطلاع (اختياري)" : "مرفق صورة أو ملف (اختياري)";
       const input = document.createElement("input");
       input.id = "collection-attachment";
       input.name = "attachment";
       input.type = "file";
-      input.accept = "image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt";
+      input.accept = config.imageOnly ? "image/jpeg,image/png,image/webp" : "image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt";
       wrapper.append(label, input);
       return wrapper;
     }
@@ -940,7 +1226,7 @@
         wrapper.append(label, control);
         collectionForm.append(wrapper);
       });
-      collectionForm.append(makeFileInput());
+      collectionForm.append(makeFileInput(config));
       const actions = document.createElement("div");
       actions.className = "form-actions full";
       const save = document.createElement("button");
@@ -1000,10 +1286,36 @@
         const heading = document.createElement("h2");
         heading.textContent = entry[config.titleField] || config.item;
         card.append(heading);
-        const meta = document.createElement("p");
-        meta.className = "entry-date";
-        meta.textContent = entry.attachment ? `مرفق: ${entry.attachment.name}` : `تاريخ الإضافة: ${entry.createdAt}`;
-        card.append(meta);
+        if (route === "opinion-polls") {
+          if (entry.attachment?.url) {
+            const image = document.createElement("img");
+            image.className = "poll-card-image";
+            image.src = entry.attachment.url;
+            image.alt = `صورة ${heading.textContent}`;
+            card.append(image);
+          }
+          if (entry.summary) {
+            const summary = document.createElement("p");
+            summary.className = "poll-card-summary";
+            summary.textContent = entry.summary;
+            card.append(summary);
+          }
+          const pollHref = safePollUrl(entry.pollUrl);
+          if (pollHref) {
+            const pollLink = document.createElement("a");
+            pollLink.className = "poll-card-link";
+            pollLink.href = pollHref;
+            pollLink.target = "_blank";
+            pollLink.rel = "noopener noreferrer";
+            pollLink.textContent = "فتح الاستطلاع";
+            card.append(pollLink);
+          }
+        } else {
+          const meta = document.createElement("p");
+          meta.className = "entry-date";
+          meta.textContent = entry.attachment ? `مرفق: ${entry.attachment.name}` : `تاريخ الإضافة: ${entry.createdAt}`;
+          card.append(meta);
+        }
         const actions = document.createElement("div");
         actions.className = "entry-actions";
         const button = (label, className, handler) => {
@@ -1028,6 +1340,13 @@
         card.append(actions);
         collectionList.append(card);
       });
+    }
+
+    function safePollUrl(value) {
+      try {
+        const parsed = new URL(String(value || ""));
+        return ["http:", "https:"].includes(parsed.protocol) ? parsed.href : "";
+      } catch { return ""; }
     }
 
     collectionAdd.addEventListener("click", () => openCollectionForm(window.location.hash.slice(1)));
