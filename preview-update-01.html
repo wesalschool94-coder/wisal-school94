@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0a4c5d">
+<title>معاينة تحديث وصال الأول</title>
+<style>
+:root{color-scheme:light;--ink:#103746;--ink-soft:#3d5f68;--teal:#0a4c5d;--teal-mid:#176f7e;--green:#378766;--paper:#eaf2f1;--line:#ccdddd;--shadow:0 12px 30px rgba(15,58,70,.11)}
+*{box-sizing:border-box}body{margin:0;min-width:320px;min-height:100vh;color:var(--ink);background:radial-gradient(ellipse at 4% 4%,rgba(61,151,117,.18),transparent 34rem),radial-gradient(ellipse at 98% 42%,rgba(27,113,132,.13),transparent 36rem),radial-gradient(ellipse at 48% 100%,rgba(77,147,121,.08),transparent 42rem),var(--paper);font-family:"Noto Sans Arabic","Noto Kufi Arabic",Tahoma,Arial,sans-serif}
+.page{width:min(1180px,calc(100% - 28px));margin:auto;padding:16px 0 30px}.brand{display:grid;justify-items:center;gap:5px;min-height:180px;padding:15px 18px;border:1px solid #b7d9d9;border-radius:21px;background:linear-gradient(118deg,#cce7e6 0%,#c2e1dd 48%,#d0e7d5 100%);box-shadow:var(--shadow)}.brand img{display:block;width:min(650px,100%);max-height:125px;object-fit:contain}.subtitle{margin:0;color:#174b59;font-size:clamp(.7rem,3.2vw,.95rem);font-weight:700;line-height:1.6;white-space:nowrap}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;margin-top:17px}.card{position:relative;display:flex;min-height:140px;flex-direction:column;align-items:flex-start;justify-content:center;gap:13px;padding:20px 22px;overflow:hidden;border:1px solid var(--line);border-radius:20px;color:inherit;background:linear-gradient(135deg,rgba(255,255,255,.98),rgba(241,249,246,.96));box-shadow:0 6px 18px rgba(15,58,70,.06);text-decoration:none}.card:before{position:absolute;inset-block:18px;inset-inline-start:0;width:5px;border-radius:5px 0 0 5px;background:linear-gradient(180deg,var(--teal-mid),#54ad7f);content:""}.icon{display:grid;width:48px;height:48px;place-items:center;border:1px solid #c9e1df;border-radius:15px;color:var(--teal);background:linear-gradient(145deg,#d8eded,#dceddf)}.icon svg{width:25px;height:25px}.card h2{margin:0;color:var(--ink);font-size:1rem;line-height:1.65}
+.section[hidden],.home[hidden]{display:none}.section{margin-top:24px;padding:22px;border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow)}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}.section h1{margin:0;font-size:clamp(1.35rem,3vw,1.9rem)}.back{padding:9px 15px;border:1px solid var(--line);border-radius:13px;color:var(--teal);background:#fff;font:inherit;font-weight:700;text-decoration:none}.note{margin:18px 0 0;color:var(--ink-soft);line-height:1.8}
+@media(max-width:760px){.cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.card{min-height:118px;flex-direction:row;align-items:center;gap:12px;padding:15px;border-radius:17px}.icon{width:46px;height:46px;flex:0 0 46px;border-radius:14px}.card h2{font-size:.94rem}}
+@media(max-width:420px){.cards{grid-template-columns:1fr}.card{min-height:92px}.brand{min-height:180px}}
+</style>
+</head>
+<body><main class="page">
+<header class="brand"><img src="wisal-logo.png" alt="وِصال — الثانوية الرابعة والتسعون، مسارات"><p class="subtitle">البوابة الرقمية | للشراكة مع أولياء الأمور والطالبات</p></header>
+<div class="home" id="home"><nav class="cards" aria-label="أقسام وصال">
+<a class="card" href="#preview-student"><span class="icon" aria-hidden="true">☆</span><h2>لوحة الطلاب المتميزين</h2></a>
+<a class="card" href="#preview-parent"><span class="icon" aria-hidden="true">♧</span><h2>لوحة أولياء الأمور المتميزين</h2></a>
+<a class="card" href="#preview-behavior"><span class="icon" aria-hidden="true">✓</span><h2>السلوك الإيجابي</h2></a>
+<a class="card" href="#preview-announcements"><span class="icon" aria-hidden="true">◁</span><h2>الإعلانات</h2></a>
+<a class="card" href="#preview-stories" id="success-card"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16M7 15l4-4 3 2 5-6"/></svg></span><h2>قصص النجاح</h2></a>
+</nav></div>
+<section class="section" id="stories" hidden><div class="section-head"><h1>قصص النجاح</h1><a class="back" href="#home">العودة للأقسام</a></div><p class="note">معاينة عنوان القسم بعد فتحه</p></section>
+</main><script>
+const home=document.getElementById('home'),stories=document.getElementById('stories');function route(){const onStories=location.hash==='#preview-stories';home.hidden=onStories;stories.hidden=!onStories;document.title=onStories?'قصص النجاح | وصال':'معاينة تحديث وصال الأول'}window.addEventListener('hashchange',route);route();
+</script></body></html>
