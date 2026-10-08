@@ -275,6 +275,8 @@
     .entry-date { margin-top: 8px !important; color: #71858a !important; font-size: .88rem; }
     .poll-card-image { display: block; width: min(100%, 360px); max-height: 250px; margin-top: 12px; border: 1px solid var(--line); border-radius: 14px; background: #f7fafa; object-fit: cover; }
     .poll-card-summary { margin: 12px 0 0; color: var(--ink-soft); line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
+    .announcement-card-image { display: block; width: 100%; max-height: 340px; margin-top: 12px; border: 1px solid var(--line); border-radius: 14px; background: #f7fafa; object-fit: cover; }
+    .announcement-card-summary { margin: 12px 0 0; color: var(--ink-soft); line-height: 1.8; white-space: pre-wrap; overflow-wrap: anywhere; }
     .poll-card-link { display: inline-flex; min-height: 42px; align-items: center; justify-content: center; margin-top: 14px; padding: 8px 16px; border-radius: 11px; color: #fff; background: linear-gradient(110deg, var(--teal), var(--green)); font-weight: 700; text-decoration: none; }
     .poll-card-link:focus-visible { outline: 3px solid rgba(24, 120, 137, .35); outline-offset: 3px; }
 
@@ -699,9 +701,9 @@
     const recordViewAttachment = document.getElementById("record-view-attachment");
 
     const collectionConfigs = {
-      announcements: { title: "الإعلانات", item: "إعلان", empty: "لا توجد إعلانات مضافة حتى الآن", titleField: "title", fields: [
+      announcements: { title: "الإعلانات", item: "إعلان", empty: "لا توجد إعلانات مضافة حتى الآن", titleField: "title", imageOnly: true, attachmentLabel: "صورة الإعلان (اختياري)", fields: [
         { name: "title", label: "عنوان الإعلان", type: "text" },
-        { name: "details", label: "نص الإعلان", type: "textarea" }
+        { name: "details", label: "ملخص الإعلان", type: "textarea" }
       ] },
       "student-blog": { title: "مدونة الطالب", item: "تدوينة", empty: "لا توجد تدوينات مضافة حتى الآن", titleField: "title", fields: [
         { name: "student", label: "اسم الطالبة", type: "text" },
@@ -835,8 +837,8 @@
     async function uploadAttachment(section, file) {
       if (!file) return null;
       if (file.size > 15 * 1024 * 1024) throw new Error("حجم المرفق يتجاوز 15 ميجابايت");
-      if (section === "opinion-polls" && !["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
-        throw new Error("صورة بطاقة الاستطلاع يجب أن تكون بصيغة JPG أو PNG أو WebP");
+      if (["opinion-polls", "announcements"].includes(section) && !["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+        throw new Error("الصورة يجب أن تكون بصيغة JPG أو PNG أو WebP");
       }
       const safeName = file.name.replace(/[^\p{L}\p{N}._-]+/gu, "-").slice(-100) || "attachment";
       const path = section + "/" + crypto.randomUUID() + "-" + safeName;
@@ -1189,7 +1191,7 @@
       wrapper.className = "form-field full";
       const label = document.createElement("label");
       label.htmlFor = "collection-attachment";
-      label.textContent = config.imageOnly ? "صورة بطاقة الاستطلاع (اختياري)" : "مرفق صورة أو ملف (اختياري)";
+      label.textContent = config.attachmentLabel || (config.imageOnly ? "صورة بطاقة الاستطلاع (اختياري)" : "مرفق صورة أو ملف (اختياري)");
       const input = document.createElement("input");
       input.id = "collection-attachment";
       input.name = "attachment";
@@ -1321,6 +1323,21 @@
             pollLink.rel = "noopener noreferrer";
             pollLink.textContent = "فتح الاستطلاع";
             card.append(pollLink);
+          }
+        } else if (route === "announcements") {
+          if (entry.attachment?.url && entry.attachment.type?.startsWith("image/")) {
+            const image = document.createElement("img");
+            image.className = "announcement-card-image";
+            image.src = entry.attachment.url;
+            image.alt = `صورة الإعلان: ${heading.textContent}`;
+            image.loading = "lazy";
+            card.append(image);
+          }
+          if (entry.details) {
+            const summary = document.createElement("p");
+            summary.className = "announcement-card-summary";
+            summary.textContent = entry.details;
+            card.append(summary);
           }
         } else {
           const meta = document.createElement("p");
