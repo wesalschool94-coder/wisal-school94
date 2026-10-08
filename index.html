@@ -1,0 +1,952 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0d5366">
+  <meta name="description" content="وِصال، بوابة الشراكة الرقمية مع أولياء الأمور والطالبات في الثانوية الرابعة والتسعين – مسارات">
+  <title>وِصال | بوابة الشراكة الرقمية</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect width='48' height='48' rx='14' fill='%230d5366'/%3E%3Cpath d='M13 25c0-7 10-12 17-6l5 5M35 23c0 7-10 12-17 6l-5-5' fill='none' stroke='%23b6edcf' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #123d4b;
+      --ink-soft: #45646c;
+      --teal: #0d5366;
+      --teal-mid: #187889;
+      --green: #3d9b73;
+      --paper: #f5f8f8;
+      --line: #dce8e8;
+      --card: #ffffff;
+      --shadow: 0 12px 30px rgba(15, 58, 70, .075);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-width: 320px;
+      min-height: 100vh;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 5% 5%, rgba(67, 157, 125, .08), transparent 34rem),
+        radial-gradient(ellipse at 98% 45%, rgba(31, 121, 137, .055), transparent 36rem),
+        var(--paper);
+      font-family: "Noto Sans Arabic", "Noto Kufi Arabic", Tahoma, Arial, sans-serif;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      margin-inline: auto;
+      padding-block: 30px 48px;
+    }
+
+    .brand-panel {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 190px;
+      padding: 20px 32px;
+      overflow: hidden;
+      border: 1px solid rgba(20, 103, 117, .14);
+      border-radius: 26px;
+      background: linear-gradient(118deg, #e5f4f4 0%, #d6efec 48%, #e3f3e8 100%);
+      box-shadow: var(--shadow);
+    }
+
+    .brand-panel img {
+      display: block;
+      width: min(650px, 100%);
+      max-height: 190px;
+      object-fit: contain;
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 26px;
+    }
+
+    .section-page[hidden],
+    .home-page[hidden] { display: none; }
+
+    .section-page { margin-top: 26px; }
+
+    .section-page-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .section-page-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: clamp(1.35rem, 3vw, 1.9rem);
+      line-height: 1.5;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      padding: 9px 15px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      color: var(--teal);
+      background: #fff;
+      font-size: .95rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .board-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #fff;
+      box-shadow: var(--shadow);
+    }
+
+    .board-rule {
+      margin: 0 0 19px;
+      color: var(--ink-soft);
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .ranking-cards-wrap { overflow-x: auto; padding: 3px 2px 10px; }
+
+    .ranking-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      direction: rtl;
+      gap: 14px;
+      min-width: 570px;
+    }
+
+    .rank-card {
+      display: flex;
+      min-height: 225px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      padding: 20px 15px;
+      border: 1px solid #dbe7e7;
+      border-radius: 19px;
+      background: linear-gradient(160deg, #fff 20%, #f3f8f7 100%);
+      text-align: center;
+    }
+
+    .rank-card:first-child {
+      border-color: #e5d29d;
+      background: linear-gradient(160deg, #fffdf6, #f8f0d9);
+      box-shadow: 0 10px 24px rgba(149, 117, 38, .12);
+    }
+
+    .rank-card:nth-child(2) {
+      border-color: #c9d0d5;
+      background: linear-gradient(160deg, #fff, #edf1f3);
+      box-shadow: 0 10px 24px rgba(99, 115, 125, .10);
+    }
+
+    .rank-card:nth-child(3) {
+      border-color: #ce9b76;
+      background: linear-gradient(160deg, #fffaf6, #f3e2d4);
+      box-shadow: 0 10px 24px rgba(145, 89, 54, .11);
+    }
+
+    .rank-card:nth-child(2) .rank-title { color: #64727a; }
+    .rank-card:nth-child(3) .rank-title { color: #8b5737; }
+
+    .behavior-form {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .form-field { display: grid; gap: 7px; }
+    .form-field.full { grid-column: 1 / -1; }
+
+    .form-field label {
+      color: var(--ink);
+      font-size: .96rem;
+      font-weight: 700;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 11px 13px;
+      border: 1px solid #cbdada;
+      border-radius: 12px;
+      color: var(--ink);
+      background: #fff;
+      font: inherit;
+      font-size: 1rem;
+    }
+
+    .form-field input[type="file"] { min-height: 48px; padding: 7px; }
+    .form-field input[type="file"]::file-selector-button {
+      margin-inline-end: 10px;
+      padding: 7px 11px;
+      border: 0;
+      border-radius: 8px;
+      color: var(--teal);
+      background: #e9f5f3;
+      font: inherit;
+      font-size: .9rem;
+      cursor: pointer;
+    }
+
+    .form-field textarea { min-height: 96px; resize: vertical; }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      outline: 3px solid rgba(24, 120, 137, .18);
+      border-color: var(--teal-mid);
+    }
+
+    .form-submit {
+      min-height: 48px;
+      justify-self: start;
+      padding: 10px 23px;
+      border: 0;
+      border-radius: 12px;
+      color: #fff;
+      background: linear-gradient(110deg, var(--teal), var(--green));
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .form-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+    .form-actions.full { grid-column: 1 / -1; }
+    .form-cancel,
+    .entry-action {
+      min-height: 42px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      color: var(--teal);
+      background: #fff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .form-cancel[hidden] { display: none; }
+    .entry-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 13px; }
+    .entry-action.delete { color: #9a3f3f; border-color: #ead1d1; }
+    .entry-attachment { display: grid; justify-items: start; gap: 8px; margin-top: 12px; }
+    .entry-attachment img { display: block; width: min(100%, 260px); max-height: 220px; object-fit: contain; border: 1px solid var(--line); border-radius: 12px; background: #f7fafa; }
+    .entry-attachment a { color: var(--teal); font-weight: 700; overflow-wrap: anywhere; }
+    .entry-date { margin-top: 8px !important; color: #71858a !important; font-size: .88rem; }
+
+    .behavior-list { display: grid; gap: 12px; margin-top: 16px; }
+
+    .behavior-empty {
+      margin: 0;
+      padding: 20px;
+      border: 1px dashed #c5d6d7;
+      border-radius: 15px;
+      color: #60767c;
+      text-align: center;
+    }
+
+    .behavior-entry {
+      padding: 16px 18px;
+      border: 1px solid var(--line);
+      border-radius: 15px;
+      background: #fff;
+    }
+
+    .behavior-entry h2 { margin: 0 0 6px; color: var(--teal); font-size: 1rem; }
+    .behavior-entry p { margin: 0; color: var(--ink-soft); line-height: 1.7; }
+    .behavior-add-trigger { margin-bottom: 18px; }
+    .behavior-dialog { width: min(620px, calc(100% - 28px)); max-height: min(82vh, 760px); padding: 0; overflow: auto; border: 1px solid var(--line); border-radius: 20px; color: var(--ink); background: #fff; box-shadow: 0 24px 70px rgba(10, 45, 55, .28); }
+    .behavior-dialog::backdrop { background: rgba(12, 39, 47, .48); backdrop-filter: blur(3px); }
+    .behavior-dialog-inner { padding: 22px; }
+    .behavior-dialog-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 18px; }
+    .behavior-dialog-head h2 { margin: 0 0 15px; color: var(--teal); font-size: 1.15rem; line-height: 1.7; }
+    .dialog-close { width: 42px; height: 42px; flex: 0 0 42px; border: 1px solid var(--line); border-radius: 12px; color: var(--teal); background: #fff; font: inherit; font-size: 1.4rem; cursor: pointer; }
+    .behavior-dialog-details { margin: 0; color: var(--ink-soft); line-height: 1.9; white-space: pre-wrap; overflow-wrap: anywhere; }
+
+    .rank-emblem { min-height: 48px; font-size: 2rem; line-height: 1.4; }
+
+    .rank-title { margin: 0; color: var(--teal); font-size: 1.05rem; font-weight: 800; }
+
+    .rank-name { margin: 0; color: var(--ink-soft); font-size: .96rem; line-height: 1.7; }
+
+    .rank-count {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      margin: 4px 0 0;
+      padding-top: 12px;
+      border-top: 1px solid rgba(18, 61, 75, .12);
+      color: #536c72;
+      font-size: .9rem;
+    }
+
+    .rank-count strong { color: var(--ink); font-size: 1.05rem; }
+
+    .section-card {
+      position: relative;
+      display: flex;
+      min-height: 132px;
+      align-items: center;
+      gap: 18px;
+      padding: 20px 22px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      color: inherit;
+      background: var(--card);
+      box-shadow: 0 6px 18px rgba(15, 58, 70, .045);
+      text-decoration: none;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+
+    .section-card::before {
+      position: absolute;
+      inset-block: 20px;
+      inset-inline-start: 0;
+      width: 4px;
+      border-radius: 4px 0 0 4px;
+      background: linear-gradient(180deg, var(--teal-mid), #54ad7f);
+      content: "";
+      opacity: .88;
+    }
+
+    .section-card:hover,
+    .section-card:focus-within {
+      transform: translateY(-3px);
+      border-color: rgba(24, 120, 137, .35);
+      box-shadow: 0 14px 28px rgba(15, 58, 70, .10);
+    }
+
+    .section-card:focus-visible {
+      outline: 3px solid rgba(24, 120, 137, .35);
+      outline-offset: 3px;
+    }
+
+    .back-link:focus-visible {
+      outline: 3px solid rgba(24, 120, 137, .35);
+      outline-offset: 3px;
+    }
+
+    .card-icon {
+      display: grid;
+      width: 56px;
+      height: 56px;
+      flex: 0 0 56px;
+      place-items: center;
+      border: 1px solid rgba(28, 124, 135, .13);
+      border-radius: 17px;
+      color: var(--teal);
+      background: linear-gradient(145deg, #e9f5f5, #e9f5ed);
+    }
+
+    .card-icon svg { width: 27px; height: 27px; }
+
+    .card-title {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.03rem;
+      font-weight: 700;
+      line-height: 1.65;
+    }
+
+    @media (min-width: 1000px) {
+      .sections { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+      .section-card { min-height: 140px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 13px; }
+    }
+
+    @media (max-width: 760px) {
+      .page { width: min(100% - 28px, 600px); padding-block: 16px 30px; }
+      .brand-panel { min-height: 142px; padding: 15px 18px; border-radius: 21px; }
+      .brand-panel img { max-height: 145px; }
+      .sections { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 17px; }
+      .section-card { min-height: 118px; padding: 15px; gap: 12px; border-radius: 17px; }
+      .card-icon { width: 46px; height: 46px; flex-basis: 46px; border-radius: 14px; }
+      .card-icon svg { width: 23px; height: 23px; }
+      .card-title { font-size: .94rem; }
+    }
+
+    @media (max-width: 560px) {
+      .behavior-form { grid-template-columns: 1fr; }
+      .form-field.full { grid-column: auto; }
+    }
+
+    @media (max-width: 420px) {
+      .sections { grid-template-columns: 1fr; }
+      .section-card { min-height: 92px; }
+      .brand-panel { min-height: 126px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="home-page" id="home-page">
+      <header class="brand-panel" aria-label="وِصال، الثانوية الرابعة والتسعون – مسارات">
+        <img src="wisal-logo.png" alt="وِصال — الثانوية الرابعة والتسعون، مسارات">
+      </header>
+
+      <nav class="sections" aria-label="أقسام وِصال">
+      <a class="section-card" href="#student-board" aria-label="فتح لوحة الطلاب المتميزين">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 14.6 8l5.1 1.1-3.5 3.8.5 5.2-4.7-2.1-4.7 2.1.5-5.2-3.5-3.8L9.4 8 12 3.5Z"/><path d="M8.5 20h7"/></svg></span>
+        <h2 class="card-title">لوحة الطلاب المتميزين</h2>
+      </a>
+      <a class="section-card" href="#parent-board" aria-label="فتح لوحة أولياء الأمور المتميزين">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.4"/><path d="M3.8 19c.4-3 2.1-4.6 5.2-4.6s4.8 1.6 5.2 4.6M14.7 14.8c2.9-.7 5 .8 5.5 3.7"/></svg></span>
+        <h2 class="card-title">لوحة أولياء الأمور المتميزين</h2>
+      </a>
+      <a class="section-card" href="#positive-behavior" aria-label="فتح السلوك الإيجابي">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5 19 6v5.2c0 4.4-2.8 7.5-7 9.3-4.2-1.8-7-4.9-7-9.3V6l7-2.5Z"/><path d="m8.8 12.1 2.1 2.1 4.4-4.5"/></svg></span>
+        <h2 class="card-title">السلوك الإيجابي</h2>
+      </a>
+      <a class="section-card" href="#announcements" aria-label="فتح قسم الإعلانات">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v4h3l9 4V6l-9 4H4Z"/><path d="m7 14 1.5 5h3L10 15M19 9.2a4 4 0 0 1 0 5.6"/></svg></span>
+        <h2 class="card-title">الإعلانات</h2>
+      </a>
+      <a class="section-card" href="#student-blog" aria-label="فتح مدونة الطالب">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4.5h14v15H5z"/><path d="M8 8h8M8 12h8M8 16h5"/><path d="m4 6-1.5 1v10L5 19"/></svg></span>
+        <h2 class="card-title">مدونة الطالب</h2>
+      </a>
+      <a class="section-card" href="#parent-blog" aria-label="فتح مدونة ولي الأمر">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v11H9l-5 3v-14Z"/><path d="M8 9h8M8 13h5"/></svg></span>
+        <h2 class="card-title">مدونة ولي الأمر</h2>
+      </a>
+      <a class="section-card" href="#recognitions" aria-label="فتح التكريمات">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5"/><path d="m9 13-1 7 4-2 4 2-1-7M10.2 9l1.2 1.2 2.5-2.6"/></svg></span>
+        <h2 class="card-title">التكريمات</h2>
+      </a>
+      <a class="section-card" href="#success-stories" aria-label="فتح قصص النجاح في التحصيلي والقدرات وSTEP">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5M4 19h16"/><path d="m7 15 4-4 3 2 5-6"/><path d="M16 7h3v3"/></svg></span>
+        <h2 class="card-title">قصص النجاح</h2>
+      </a>
+      <a class="section-card" href="#events-magazine" aria-label="فتح مجلة المناسبات الوطنية والعالمية">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M3.8 12h16.4M12 3.5c2.2 2.4 3.2 5.2 3.2 8.5s-1 6.1-3.2 8.5c-2.2-2.4-3.2-5.2-3.2-8.5S9.8 5.9 12 3.5Z"/></svg></span>
+        <h2 class="card-title">مجلة المناسبات الوطنية والعالمية</h2>
+      </a>
+      <a class="section-card" href="#volunteer-work" aria-label="فتح العمل التطوعي">
+        <span class="card-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.5A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/><path d="M12 9v6M9 12h6"/></svg></span>
+        <h2 class="card-title">العمل التطوعي</h2>
+      </a>
+      </nav>
+    </section>
+
+    <section class="section-page" id="student-board" aria-labelledby="student-board-title" hidden>
+      <div class="section-page-head">
+        <h1 class="section-page-title" id="student-board-title">لوحة الطلاب المتميزين</h1>
+        <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
+      </div>
+      <div class="board-card">
+        <p class="board-rule">يُحتسب التميز بعدد المشاركات المنفذة، ويُرشَّح الاسم الأعلى مشاركة</p>
+        <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
+          <div class="ranking-cards">
+            <article class="rank-card">
+              <span class="rank-emblem" aria-hidden="true">🥇</span>
+              <h2 class="rank-title">المركز الأول</h2>
+              <p class="rank-name">بانتظار الترشيح</p>
+              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
+            </article>
+            <article class="rank-card">
+              <span class="rank-emblem" aria-hidden="true">🥈</span>
+              <h2 class="rank-title">المركز الثاني</h2>
+              <p class="rank-name">بانتظار الترشيح</p>
+              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
+            </article>
+            <article class="rank-card">
+              <span class="rank-emblem" aria-hidden="true">🥉</span>
+              <h2 class="rank-title">المركز الثالث</h2>
+              <p class="rank-name">بانتظار الترشيح</p>
+              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-page" id="parent-board" aria-labelledby="parent-board-title" hidden>
+      <div class="section-page-head">
+        <h1 class="section-page-title" id="parent-board-title">لوحة أولياء الأمور المتميزين</h1>
+        <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
+      </div>
+      <div class="board-card">
+        <p class="board-rule">يُحتسب التميز بعدد المشاركات المنفذة، ويُرشَّح الاسم الأعلى مشاركة</p>
+        <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
+          <div class="ranking-cards">
+            <article class="rank-card">
+              <span class="rank-emblem" aria-hidden="true">🥇</span>
+              <h2 class="rank-title">المركز الأول</h2>
+              <p class="rank-name">بانتظار الترشيح</p>
+              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
+            </article>
+            <article class="rank-card">
+              <span class="rank-emblem" aria-hidden="true">🥈</span>
+              <h2 class="rank-title">المركز الثاني</h2>
+              <p class="rank-name">بانتظار الترشيح</p>
+              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
+            </article>
+            <article class="rank-card">
+              <span class="rank-emblem" aria-hidden="true">🥉</span>
+              <h2 class="rank-title">المركز الثالث</h2>
+              <p class="rank-name">بانتظار الترشيح</p>
+              <p class="rank-count"><span>المشاركات المنفذة</span><strong>—</strong></p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-page" id="positive-behavior" aria-labelledby="positive-behavior-title" hidden>
+      <div class="section-page-head">
+        <h1 class="section-page-title" id="positive-behavior-title">السلوك الإيجابي</h1>
+        <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
+      </div>
+      <div class="board-card">
+        <button class="form-submit behavior-add-trigger" id="behavior-add-trigger" type="button">إضافة مشاركة</button>
+        <form class="behavior-form" id="behavior-form" hidden>
+          <div class="form-field">
+            <label for="student-name">اسم الطالبة</label>
+            <input id="student-name" name="studentName" autocomplete="name" required>
+          </div>
+          <div class="form-field">
+            <label for="behavior-type">نوع المشاركة</label>
+            <select id="behavior-type" name="behaviorType" required>
+              <option value="" selected disabled>اختاري نوع المشاركة</option>
+              <option>برنامج</option>
+              <option>مبادرة</option>
+              <option>فعالية</option>
+              <option>ورش</option>
+              <option>تطوع</option>
+              <option>انضباط</option>
+              <option>شهادات شكر</option>
+              <option>شهادات إنجاز</option>
+              <option>نظافة الصف</option>
+              <option>البيئة المستدامة</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label for="behavior-details">تفاصيل المشاركة</label>
+            <textarea id="behavior-details" name="details" required></textarea>
+          </div>
+          <div class="form-field full">
+            <label for="behavior-attachment">مرفق صورة أو ملف (اختياري)</label>
+            <input id="behavior-attachment" name="attachment" type="file" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt">
+          </div>
+          <div class="form-actions full">
+            <button class="form-submit" id="behavior-submit" type="submit">إضافة المشاركة</button>
+            <button class="form-cancel" id="behavior-cancel" type="button" hidden>إلغاء التعديل</button>
+          </div>
+        </form>
+      </div>
+      <div class="behavior-list" id="behavior-list" aria-live="polite">
+        <p class="behavior-empty" id="behavior-empty">لا توجد مشاركات مضافة في هذه المعاينة</p>
+      </div>
+    </section>
+
+    <section class="section-page" id="collection-page" aria-labelledby="collection-title" hidden>
+      <div class="section-page-head">
+        <h1 class="section-page-title" id="collection-title"></h1>
+        <a class="back-link" href="#home" aria-label="العودة إلى أقسام وِصال">العودة للأقسام</a>
+      </div>
+      <div class="board-card">
+        <button class="form-submit behavior-add-trigger" id="collection-add" type="button">إضافة</button>
+        <form class="behavior-form" id="collection-form" hidden></form>
+      </div>
+      <div class="behavior-list" id="collection-list" aria-live="polite"></div>
+    </section>
+
+    <dialog class="behavior-dialog" id="record-view" aria-labelledby="record-view-title">
+      <div class="behavior-dialog-inner">
+        <div class="behavior-dialog-head">
+          <h2 id="record-view-title"></h2>
+          <button class="dialog-close" id="record-view-close" type="button" aria-label="إغلاق">×</button>
+        </div>
+        <div class="behavior-dialog-details" id="record-view-details"></div>
+        <div class="entry-attachment" id="record-view-attachment"></div>
+      </div>
+    </dialog>
+  </main>
+  <script>
+    const homePage = document.getElementById("home-page");
+    const studentBoard = document.getElementById("student-board");
+    const parentBoard = document.getElementById("parent-board");
+    const positiveBehavior = document.getElementById("positive-behavior");
+    const collectionPage = document.getElementById("collection-page");
+    const collectionTitle = document.getElementById("collection-title");
+    const collectionAdd = document.getElementById("collection-add");
+    const collectionForm = document.getElementById("collection-form");
+    const collectionList = document.getElementById("collection-list");
+    const recordView = document.getElementById("record-view");
+    const recordViewTitle = document.getElementById("record-view-title");
+    const recordViewDetails = document.getElementById("record-view-details");
+    const recordViewAttachment = document.getElementById("record-view-attachment");
+
+    const collectionConfigs = {
+      announcements: { title: "الإعلانات", item: "إعلان", empty: "لا توجد إعلانات مضافة حتى الآن", titleField: "title", fields: [
+        { name: "title", label: "عنوان الإعلان", type: "text" },
+        { name: "details", label: "نص الإعلان", type: "textarea" }
+      ] },
+      "student-blog": { title: "مدونة الطالب", item: "تدوينة", empty: "لا توجد تدوينات مضافة حتى الآن", titleField: "title", fields: [
+        { name: "student", label: "اسم الطالبة", type: "text" },
+        { name: "title", label: "عنوان التدوينة", type: "text" },
+        { name: "content", label: "محتوى التدوينة", type: "textarea" }
+      ] },
+      "parent-blog": { title: "مدونة ولي الأمر", item: "تدوينة", empty: "لا توجد تدوينات مضافة حتى الآن", titleField: "title", fields: [
+        { name: "parent", label: "اسم ولي الأمر", type: "text" },
+        { name: "title", label: "عنوان التدوينة", type: "text" },
+        { name: "content", label: "محتوى التدوينة", type: "textarea" }
+      ] },
+      recognitions: { title: "التكريمات", item: "تكريم", empty: "لا توجد تكريمات مضافة حتى الآن", titleField: "honor", fields: [
+        { name: "person", label: "اسم المكرَّمة", type: "text" },
+        { name: "honor", label: "عنوان التكريم", type: "text" },
+        { name: "details", label: "تفاصيل التكريم", type: "textarea" }
+      ] },
+      "success-stories": { title: "قصص النجاح - التحصيلي والقدرات وSTEP", item: "قصة نجاح", empty: "لا توجد قصص نجاح مضافة حتى الآن", titleField: "student", fields: [
+        { name: "student", label: "اسم الطالبة", type: "text" },
+        { name: "exam", label: "نوع قصة النجاح", type: "select", options: ["تفوق دراسي", "التحصيلي", "القدرات", "STEP"] },
+        { name: "score", label: "الدرجة (اختياري)", type: "text", required: false },
+        { name: "story", label: "قصة النجاح", type: "textarea" }
+      ] },
+      "events-magazine": { title: "مجلة المناسبات الوطنية والعالمية", item: "مادة للمجلة", empty: "لا توجد مواد مضافة للمجلة حتى الآن", titleField: "occasion", fields: [
+        { name: "occasion", label: "عنوان المناسبة", type: "text" },
+        { name: "kind", label: "نوع المناسبة", type: "select", options: ["وطنية", "عالمية"] },
+        { name: "date", label: "تاريخ المناسبة (اختياري)", type: "date", required: false },
+        { name: "content", label: "المحتوى", type: "textarea" }
+      ] },
+      "volunteer-work": { title: "العمل التطوعي", item: "عمل تطوعي", empty: "لا توجد أعمال تطوعية مضافة حتى الآن", titleField: "initiative", fields: [
+        { name: "initiative", label: "اسم المبادرة أو العمل", type: "text" },
+        { name: "participants", label: "اسم الطالبة أو الفريق", type: "text" },
+        { name: "hours", label: "الساعات التطوعية (اختياري)", type: "number", required: false, min: 0 },
+        { name: "details", label: "تفاصيل العمل", type: "textarea" }
+      ] }
+    };
+    const collectionEntries = new Map(Object.keys(collectionConfigs).map((key) => [key, []]));
+    const behaviorForm = document.getElementById("behavior-form");
+    const behaviorList = document.getElementById("behavior-list");
+    const behaviorEmpty = document.getElementById("behavior-empty");
+    const behaviorSubmit = document.getElementById("behavior-submit");
+    const behaviorCancel = document.getElementById("behavior-cancel");
+    const behaviorAddTrigger = document.getElementById("behavior-add-trigger");
+    const behaviorAttachment = document.getElementById("behavior-attachment");
+    const behaviorEntries = [];
+
+    function showRoute() {
+      const route = window.location.hash.slice(1);
+      const config = collectionConfigs[route];
+      const isStudentBoard = route === "student-board";
+      const isParentBoard = route === "parent-board";
+      const isBehavior = route === "positive-behavior";
+      homePage.hidden = Boolean(config || isStudentBoard || isParentBoard || isBehavior);
+      studentBoard.hidden = !isStudentBoard;
+      parentBoard.hidden = !isParentBoard;
+      positiveBehavior.hidden = !isBehavior;
+      collectionPage.hidden = !config;
+      if (config) {
+        collectionTitle.textContent = config.title;
+        collectionAdd.textContent = `إضافة ${config.item}`;
+        setupCollectionForm(config);
+        renderCollection(route, config);
+      }
+      document.title = config ? `${config.title} | وِصال`
+        : isStudentBoard ? "لوحة الطلاب المتميزين | وِصال"
+          : isParentBoard ? "لوحة أولياء الأمور المتميزين | وِصال"
+            : isBehavior ? "السلوك الإيجابي | وِصال" : "وِصال | بوابة الشراكة الرقمية";
+    }
+    window.addEventListener("hashchange", showRoute);
+    showRoute();
+
+    function openRecordView(title, lines, attachment, altName) {
+      recordViewTitle.textContent = title;
+      recordViewDetails.replaceChildren();
+      lines.forEach(([label, value]) => {
+        if (!value) return;
+        const line = document.createElement("p");
+        const strong = document.createElement("strong");
+        strong.textContent = `${label}: `;
+        line.append(strong, document.createTextNode(value));
+        recordViewDetails.append(line);
+      });
+      recordViewAttachment.replaceChildren();
+      if (attachment) {
+        if (attachment.type.startsWith("image/")) {
+          const image = document.createElement("img");
+          image.src = attachment.url;
+          image.alt = `مرفق ${altName}`;
+          recordViewAttachment.append(image);
+        }
+        const link = document.createElement("a");
+        link.href = attachment.url;
+        link.download = attachment.name;
+        link.textContent = `فتح المرفق: ${attachment.name}`;
+        recordViewAttachment.append(link);
+      }
+      recordView.showModal();
+    }
+
+    function makeFileInput() {
+      const wrapper = document.createElement("div");
+      wrapper.className = "form-field full";
+      const label = document.createElement("label");
+      label.htmlFor = "collection-attachment";
+      label.textContent = "مرفق صورة أو ملف (اختياري)";
+      const input = document.createElement("input");
+      input.id = "collection-attachment";
+      input.name = "attachment";
+      input.type = "file";
+      input.accept = "image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt";
+      wrapper.append(label, input);
+      return wrapper;
+    }
+
+    function setupCollectionForm(config) {
+      collectionForm.replaceChildren();
+      collectionForm.hidden = true;
+      collectionAdd.hidden = false;
+      config.fields.forEach((field) => {
+        const wrapper = document.createElement("div");
+        wrapper.className = `form-field${field.type === "textarea" ? " full" : ""}`;
+        const id = `collection-${field.name}`;
+        const label = document.createElement("label");
+        label.htmlFor = id;
+        label.textContent = field.label;
+        let control;
+        if (field.type === "textarea") {
+          control = document.createElement("textarea");
+        } else if (field.type === "select") {
+          control = document.createElement("select");
+          const placeholder = document.createElement("option");
+          placeholder.value = "";
+          placeholder.textContent = "اختاري من القائمة";
+          placeholder.disabled = true;
+          placeholder.selected = true;
+          control.append(placeholder);
+          field.options.forEach((optionText) => {
+            const option = document.createElement("option");
+            option.value = optionText;
+            option.textContent = optionText;
+            control.append(option);
+          });
+        } else {
+          control = document.createElement("input");
+          control.type = field.type;
+          if (field.min !== undefined) control.min = String(field.min);
+        }
+        control.id = id;
+        control.name = field.name;
+        control.required = field.required !== false;
+        wrapper.append(label, control);
+        collectionForm.append(wrapper);
+      });
+      collectionForm.append(makeFileInput());
+      const actions = document.createElement("div");
+      actions.className = "form-actions full";
+      const save = document.createElement("button");
+      save.className = "form-submit";
+      save.type = "submit";
+      save.textContent = "إضافة";
+      const cancel = document.createElement("button");
+      cancel.className = "form-cancel";
+      cancel.type = "button";
+      cancel.textContent = "إلغاء";
+      cancel.addEventListener("click", closeCollectionForm);
+      actions.append(save, cancel);
+      collectionForm.append(actions);
+      save.id = "collection-submit";
+    }
+
+    function openCollectionForm(route, entry = null) {
+      const config = collectionConfigs[route];
+      setupCollectionForm(config);
+      if (entry) {
+        config.fields.forEach((field) => {
+          const control = collectionForm.elements.namedItem(field.name);
+          control.value = entry[field.name] || "";
+        });
+        collectionForm.dataset.editingId = entry.id;
+        document.getElementById("collection-submit").textContent = "حفظ التعديل";
+      } else {
+        collectionForm.dataset.editingId = "";
+      }
+      collectionForm.hidden = false;
+      collectionAdd.hidden = true;
+      collectionForm.scrollIntoView({ behavior: "smooth", block: "start" });
+      collectionForm.querySelector("input:not([type=file]), select, textarea")?.focus({ preventScroll: true });
+    }
+
+    function closeCollectionForm() {
+      collectionForm.reset();
+      collectionForm.hidden = true;
+      collectionForm.dataset.editingId = "";
+      collectionAdd.hidden = false;
+    }
+
+    function renderCollection(route, config) {
+      const records = collectionEntries.get(route);
+      collectionList.replaceChildren();
+      if (!records.length) {
+        const empty = document.createElement("p");
+        empty.className = "behavior-empty";
+        empty.textContent = config.empty;
+        collectionList.append(empty);
+        return;
+      }
+      records.forEach((entry) => {
+        const card = document.createElement("article");
+        card.className = "behavior-entry";
+        const heading = document.createElement("h2");
+        heading.textContent = entry[config.titleField] || config.item;
+        card.append(heading);
+        const meta = document.createElement("p");
+        meta.className = "entry-date";
+        meta.textContent = entry.attachment ? `مرفق: ${entry.attachment.name}` : `تاريخ الإضافة: ${entry.createdAt}`;
+        card.append(meta);
+        const actions = document.createElement("div");
+        actions.className = "entry-actions";
+        const button = (label, className, handler) => {
+          const control = document.createElement("button");
+          control.type = "button";
+          control.className = className;
+          control.textContent = label;
+          control.addEventListener("click", handler);
+          return control;
+        };
+        actions.append(
+          button("استعراض", "entry-action", () => openRecordView(heading.textContent, config.fields.map((field) => [field.label, entry[field.name]]), entry.attachment, config.item)),
+          button("تعديل", "entry-action", () => openCollectionForm(route, entry)),
+          button("حذف", "entry-action delete", () => {
+            if (!window.confirm(`هل تريدين حذف ${config.item}؟`)) return;
+            if (entry.attachment) URL.revokeObjectURL(entry.attachment.url);
+            records.splice(records.indexOf(entry), 1);
+            if (collectionForm.dataset.editingId === entry.id) closeCollectionForm();
+            renderCollection(route, config);
+          })
+        );
+        card.append(actions);
+        collectionList.append(card);
+      });
+    }
+
+    collectionAdd.addEventListener("click", () => openCollectionForm(window.location.hash.slice(1)));
+    collectionForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const route = window.location.hash.slice(1);
+      const config = collectionConfigs[route];
+      const records = collectionEntries.get(route);
+      const previous = records.find((item) => item.id === collectionForm.dataset.editingId);
+      const values = new FormData(collectionForm);
+      const newFile = collectionForm.elements.namedItem("attachment").files[0];
+      const attachment = newFile ? { name: newFile.name, type: newFile.type || "application/octet-stream", url: URL.createObjectURL(newFile) } : previous?.attachment || null;
+      if (newFile && previous?.attachment) URL.revokeObjectURL(previous.attachment.url);
+      const now = new Intl.DateTimeFormat("ar-SA", { dateStyle: "medium" }).format(new Date());
+      const entry = { id: previous?.id || crypto.randomUUID(), attachment, createdAt: previous?.createdAt || now, updatedAt: previous ? now : "" };
+      config.fields.forEach((field) => { entry[field.name] = String(values.get(field.name) || "").trim(); });
+      if (previous) records.splice(records.indexOf(previous), 1, entry);
+      else records.unshift(entry);
+      closeCollectionForm();
+      renderCollection(route, config);
+    });
+
+    function resetBehaviorForm() {
+      behaviorForm.reset();
+      behaviorForm.dataset.editingId = "";
+      behaviorSubmit.textContent = "إضافة المشاركة";
+      behaviorCancel.hidden = true;
+    }
+    function closeBehaviorForm() {
+      resetBehaviorForm();
+      behaviorForm.hidden = true;
+      behaviorAddTrigger.hidden = false;
+    }
+    function openBehaviorForm(entry = null) {
+      resetBehaviorForm();
+      if (entry) {
+        document.getElementById("student-name").value = entry.studentName;
+        document.getElementById("behavior-type").value = entry.behaviorType;
+        document.getElementById("behavior-details").value = entry.details;
+        behaviorForm.dataset.editingId = entry.id;
+        behaviorSubmit.textContent = "حفظ التعديل";
+        behaviorCancel.hidden = false;
+      }
+      behaviorForm.hidden = false;
+      behaviorAddTrigger.hidden = true;
+      behaviorForm.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.getElementById("student-name").focus({ preventScroll: true });
+    }
+    function renderBehaviorEntries() {
+      behaviorList.replaceChildren();
+      if (!behaviorEntries.length) {
+        behaviorEmpty.textContent = "لا توجد مشاركات مضافة في هذه المعاينة";
+        behaviorList.append(behaviorEmpty);
+        return;
+      }
+      behaviorEntries.forEach((entry) => {
+        const card = document.createElement("article");
+        card.className = "behavior-entry";
+        const title = document.createElement("h2");
+        title.textContent = `${entry.studentName} — ${entry.behaviorType}`;
+        const meta = document.createElement("p");
+        meta.className = "entry-date";
+        meta.textContent = entry.updatedAt ? `آخر تعديل: ${entry.updatedAt}` : `تاريخ الإضافة: ${entry.createdAt}`;
+        const actions = document.createElement("div");
+        actions.className = "entry-actions";
+        const button = (label, destructive, handler) => {
+          const control = document.createElement("button");
+          control.type = "button";
+          control.className = destructive ? "entry-action delete" : "entry-action";
+          control.textContent = label;
+          control.addEventListener("click", handler);
+          return control;
+        };
+        actions.append(
+          button("استعراض", false, () => openRecordView(title.textContent, [["نوع المشاركة", entry.behaviorType], ["اسم الطالبة", entry.studentName], ["التفاصيل", entry.details]], entry.attachment, entry.studentName)),
+          button("تعديل", false, () => openBehaviorForm(entry)),
+          button("حذف", true, () => {
+            if (!window.confirm(`هل تريدين حذف مشاركة ${entry.studentName}؟`)) return;
+            if (entry.attachment) URL.revokeObjectURL(entry.attachment.url);
+            behaviorEntries.splice(behaviorEntries.indexOf(entry), 1);
+            if (behaviorForm.dataset.editingId === entry.id) closeBehaviorForm();
+            renderBehaviorEntries();
+          })
+        );
+        card.append(title, meta, actions);
+        behaviorList.append(card);
+      });
+    }
+    behaviorForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const values = new FormData(behaviorForm);
+      const previous = behaviorEntries.find((item) => item.id === behaviorForm.dataset.editingId);
+      const file = behaviorAttachment.files[0];
+      const attachment = file ? { name: file.name, type: file.type || "application/octet-stream", url: URL.createObjectURL(file) } : previous?.attachment || null;
+      if (file && previous?.attachment) URL.revokeObjectURL(previous.attachment.url);
+      const now = new Intl.DateTimeFormat("ar-SA", { dateStyle: "medium" }).format(new Date());
+      const entry = { id: previous?.id || crypto.randomUUID(), studentName: String(values.get("studentName")).trim(), behaviorType: values.get("behaviorType"), details: String(values.get("details")).trim(), attachment, createdAt: previous?.createdAt || now, updatedAt: previous ? now : "" };
+      if (previous) behaviorEntries.splice(behaviorEntries.indexOf(previous), 1, entry);
+      else behaviorEntries.unshift(entry);
+      closeBehaviorForm();
+      renderBehaviorEntries();
+    });
+    behaviorAddTrigger.addEventListener("click", () => openBehaviorForm());
+    behaviorCancel.addEventListener("click", closeBehaviorForm);
+    document.getElementById("record-view-close").addEventListener("click", () => recordView.close());
+    recordView.addEventListener("click", (event) => { if (event.target === recordView) recordView.close(); });
+  </script>
+</body>
+</html>
