@@ -819,7 +819,7 @@
         ...(data || []).filter((item) => item.section === "positive-behavior").map(toEntry));
     }
 
-    async function refreshEditorAccess() {
+    async function refreshPublicAccess() {
       const { data: userData } = await db.auth.getUser();
       currentUser = userData?.user || null;
       isEditor = false;
@@ -828,10 +828,8 @@
         if (error && error.code !== "PGRST116") throw error;
         isEditor = Boolean(data);
       }
-      document.querySelectorAll(".behavior-add-trigger, #collection-add").forEach((button) => { button.hidden = !isEditor; });
-      if (isEditor) setCloudStatus("متصلة سحابيًا — دخول المحررة مفعّل");
-      else if (currentUser) setCloudStatus("تم تسجيل الدخول، لكن هذا الحساب غير مفعّل للتحرير");
-      else setCloudStatus("المحتوى يُعرض من Supabase — دخول المحررة للكتابة");
+      document.querySelectorAll(".behavior-add-trigger, #collection-add").forEach((button) => { button.hidden = false; });
+      setCloudStatus("المحتوى متصل سحابيًا");
     }
 
     async function uploadAttachment(section, file) {
@@ -848,7 +846,6 @@
     }
 
     async function saveCloudRecord({ section, title, category, values, previous, file }) {
-      if (!isEditor) throw new Error("يلزم تسجيل الدخول بحساب محررة وِصال");
       const uploaded = await uploadAttachment(section, file);
       const oldAttachment = previous?.attachment || null;
       const details = { ...values };
@@ -864,7 +861,7 @@
         details,
         attachment_path: attachment?.path || null,
         is_published: true,
-        created_by: currentUser.id
+        created_by: currentUser?.id || null
       };
       const result = previous
         ? await db.from("portal_records").update(payload).eq("id", previous.id).select("id").single()
@@ -877,14 +874,13 @@
     }
 
     async function saveBehaviorRecord({ title, category, values, previous, newFiles, retainedAttachments }) {
-      if (!isEditor) throw new Error("يلزم تسجيل الدخول بحساب محررة وِصال");
       if (retainedAttachments.length + newFiles.length > 2) throw new Error("يسمح بمرفقين فقط لكل مشاركة");
       const uploaded = [];
       try {
         for (const file of newFiles) uploaded.push(await uploadAttachment("positive-behavior", file));
         const attachments = [...retainedAttachments, ...uploaded];
         const details = { ...values, _attachments: attachments.map(({ path, name, type }) => ({ path, name, type })) };
-        const payload = { section: "positive-behavior", title, category, details, attachment_path: attachments[0]?.path || null, is_published: true, created_by: currentUser.id };
+        const payload = { section: "positive-behavior", title, category, details, attachment_path: attachments[0]?.path || null, is_published: true, created_by: currentUser?.id || null };
         const result = previous
           ? await db.from("portal_records").update(payload).eq("id", previous.id).select("id").single()
           : await db.from("portal_records").insert(payload).select("id").single();
@@ -904,7 +900,6 @@
     }
 
     async function deleteCloudRecord(section, entry) {
-      if (!isEditor) throw new Error("يلزم تسجيل الدخول بحساب محررة وِصال");
       const { error } = await db.from("portal_records").delete().eq("id", entry.id);
       if (error) throw error;
       const paths = (entry.attachments || (entry.attachment ? [entry.attachment] : [])).map((item) => item.path).filter(Boolean);
@@ -917,7 +912,7 @@
     async function initializeCloud() {
       if (!db) throw new Error("تعذر تحميل مكتبة Supabase");
       await loadCloudRecords();
-      await refreshEditorAccess();
+      await refreshPublicAccess();
       cloudReady = true;
       showRoute();
     }
@@ -1100,7 +1095,7 @@
           title: document.getElementById(config.titleId).value.trim(),
           description: document.getElementById(config.descriptionId).value.trim(),
           scheduled_for: date,
-          created_by: currentUser.id
+          created_by: currentUser?.id || null
         });
         if (error) window.alert(error.code === "23505" ? "يوجد تحدٍ مسجل لهذه الفئة في هذا السبت" : "تعذر حفظ التحدي: " + error.message);
         else { form.reset(); form.hidden = true; document.getElementById(config.addId).hidden = false; await loadChallengeSection(audience); setCloudStatus("حُفظ التحدي في السجل التراكمي"); }
@@ -1145,17 +1140,6 @@
     window.addEventListener("hashchange", showRoute);
     showRoute();
     initializeCloud().catch((error) => setCloudStatus("تعذر الاتصال بـ Supabase: " + error.message));
-    db?.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_IN" || event === "SIGNED_OUT" || event === "TOKEN_REFRESHED") {
-        window.setTimeout(async () => {
-          try {
-            await refreshEditorAccess();
-            await loadCloudRecords();
-            showRoute();
-          } catch (error) { setCloudStatus("تعذر تحديث الجلسة: " + error.message); }
-        }, 0);
-      }
-    });
 
     function openRecordView(title, lines, attachment, altName) {
       recordViewTitle.textContent = title;
@@ -1204,7 +1188,7 @@
     function setupCollectionForm(config) {
       collectionForm.replaceChildren();
       collectionForm.hidden = true;
-      collectionAdd.hidden = !isEditor;
+      collectionAdd.hidden = false;
       config.fields.forEach((field) => {
         const wrapper = document.createElement("div");
         wrapper.className = `form-field${field.type === "textarea" ? " full" : ""}`;
@@ -1258,7 +1242,6 @@
     }
 
     function openCollectionForm(route, entry = null) {
-      if (!isEditor) return;
       const config = collectionConfigs[route];
       setupCollectionForm(config);
       if (entry) {
@@ -1281,7 +1264,7 @@
       collectionForm.reset();
       collectionForm.hidden = true;
       collectionForm.dataset.editingId = "";
-      collectionAdd.hidden = !isEditor;
+      collectionAdd.hidden = false;
     }
 
     function renderCollection(route, config) {
@@ -1356,16 +1339,14 @@
           return control;
         };
         actions.append(button("استعراض", "entry-action", () => openRecordView(heading.textContent, config.fields.map((field) => [field.label, entry[field.name]]), entry.attachment, config.item)));
-        if (isEditor) {
-          actions.append(
-            button("تعديل", "entry-action", () => openCollectionForm(route, entry)),
-            button("حذف", "entry-action delete", async () => {
-              if (!window.confirm(`هل تريدين حذف ${config.item}؟`)) return;
-              try { await deleteCloudRecord(route, entry); }
-              catch (error) { window.alert("تعذر الحذف: " + error.message); }
-            })
-          );
-        }
+        actions.append(
+          button("تعديل", "entry-action", () => openCollectionForm(route, entry)),
+          button("حذف", "entry-action delete", async () => {
+            if (!window.confirm(`هل تريدين حذف ${config.item}؟`)) return;
+            try { await deleteCloudRecord(route, entry); }
+            catch (error) { window.alert("تعذر الحذف: " + error.message); }
+          })
+        );
         card.append(actions);
         collectionList.append(card);
       });
@@ -1381,7 +1362,6 @@
     collectionAdd.addEventListener("click", () => openCollectionForm(window.location.hash.slice(1)));
     collectionForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (!isEditor) return;
       const route = window.location.hash.slice(1);
       const config = collectionConfigs[route];
       const records = collectionEntries.get(route);
@@ -1441,10 +1421,9 @@
     function closeBehaviorForm() {
       resetBehaviorForm();
       behaviorForm.hidden = true;
-      behaviorAddTrigger.hidden = !isEditor;
+      behaviorAddTrigger.hidden = false;
     }
     function openBehaviorForm(entry = null) {
-      if (!isEditor) return;
       resetBehaviorForm();
       if (entry) {
         document.getElementById("student-name").value = entry.studentName;
@@ -1501,16 +1480,14 @@
           return control;
         };
         actions.append(button("استعراض", false, () => openRecordView(title.textContent, [["نوع المشاركة", entry.behaviorType], ["اسم الطالبة", entry.studentName], ["تاريخ المشاركة", formatParticipationDate(entry.participationDate)], ["التفاصيل", entry.details]], attachments, entry.studentName)));
-        if (isEditor) {
-          actions.append(
-            button("تعديل", false, () => openBehaviorForm(entry)),
-            button("حذف", true, async () => {
-              if (!window.confirm(`هل تريدين حذف مشاركة ${entry.studentName}؟`)) return;
-              try { await deleteCloudRecord("positive-behavior", entry); }
-              catch (error) { window.alert("تعذر الحذف: " + error.message); }
-            })
-          );
-        }
+        actions.append(
+          button("تعديل", false, () => openBehaviorForm(entry)),
+          button("حذف", true, async () => {
+            if (!window.confirm(`هل تريدين حذف مشاركة ${entry.studentName}؟`)) return;
+            try { await deleteCloudRecord("positive-behavior", entry); }
+            catch (error) { window.alert("تعذر الحذف: " + error.message); }
+          })
+        );
         card.append(title, image, meta, actions);
         behaviorList.append(card);
       });
@@ -1518,7 +1495,6 @@
     behaviorAttachment.addEventListener("change", updateBehaviorAttachmentHint);
     behaviorForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      if (!isEditor) return;
       const values = new FormData(behaviorForm);
       const previous = behaviorEntries.find((item) => item.id === behaviorForm.dataset.editingId);
       const files = Array.from(behaviorAttachment.files || []);
