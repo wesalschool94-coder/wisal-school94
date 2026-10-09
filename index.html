@@ -319,6 +319,8 @@
     .rank-card.is-third { border-color: #ce9b76; background: linear-gradient(160deg, #fffaf6, #f3e2d4); box-shadow: 0 10px 24px rgba(145, 89, 54, .11); }
     .rank-card.is-second .rank-title { color: #64727a; }
     .rank-card.is-third .rank-title { color: #8b5737; }
+    .board-show-cards { margin-top: 14px; }
+    .board-back-intro { margin-bottom: 14px; }
     .challenge-admin { margin: 14px 0 18px; }
     .challenge-admin[hidden], .challenge-form[hidden] { display: none !important; }
     .challenge-form { margin-bottom: 18px; }
@@ -539,8 +541,15 @@
       </div>
       <div class="board-card">
         <p class="board-rule">بطاقات الطالبات الفائزات في التحديات الأسبوعية، مرتبة من الأحدث</p>
-        <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
-          <div class="ranking-cards" id="student-ranking" aria-live="polite"><p class="behavior-empty">جارٍ تحميل البطاقات</p></div>
+        <div id="student-board-intro">
+          <p class="behavior-empty">ستظهر بطاقات المتميزات بعد انتهاء التصويت على أول تحدٍ</p>
+          <button class="form-submit board-show-cards" id="student-board-show-cards" type="button">عرض بطاقات المتميزات</button>
+        </div>
+        <div id="student-board-cards" hidden>
+          <button class="form-cancel board-back-intro" id="student-board-back-intro" type="button">العودة</button>
+          <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
+            <div class="ranking-cards" id="student-ranking" aria-live="polite"><p class="behavior-empty">جارٍ تحميل البطاقات</p></div>
+          </div>
         </div>
       </div>
     </section>
@@ -552,8 +561,15 @@
       </div>
       <div class="board-card">
         <p class="board-rule">بطاقات أولياء الأمور الفائزين في التحديات الأسبوعية، مرتبة من الأحدث</p>
-        <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
-          <div class="ranking-cards" id="parent-ranking" aria-live="polite"><p class="behavior-empty">جارٍ تحميل البطاقات</p></div>
+        <div id="parent-board-intro">
+          <p class="behavior-empty">ستظهر بطاقات المتميزين بعد انتهاء التصويت على أول تحدٍ</p>
+          <button class="form-submit board-show-cards" id="parent-board-show-cards" type="button">عرض بطاقات المتميزين</button>
+        </div>
+        <div id="parent-board-cards" hidden>
+          <button class="form-cancel board-back-intro" id="parent-board-back-intro" type="button">العودة</button>
+          <div class="ranking-cards-wrap" aria-label="المراكز الثلاثة">
+            <div class="ranking-cards" id="parent-ranking" aria-live="polite"><p class="behavior-empty">جارٍ تحميل البطاقات</p></div>
+          </div>
         </div>
       </div>
     </section>
@@ -689,6 +705,16 @@
     const homePage = document.getElementById("home-page");
     const studentBoard = document.getElementById("student-board");
     const parentBoard = document.getElementById("parent-board");
+    for (const audience of ["student", "parent"]) {
+      document.getElementById(`${audience}-board-show-cards`).addEventListener("click", () => {
+        document.getElementById(`${audience}-board-intro`).hidden = true;
+        document.getElementById(`${audience}-board-cards`).hidden = false;
+      });
+      document.getElementById(`${audience}-board-back-intro`).addEventListener("click", () => {
+        document.getElementById(`${audience}-board-cards`).hidden = true;
+        document.getElementById(`${audience}-board-intro`).hidden = false;
+      });
+    }
     const positiveBehavior = document.getElementById("positive-behavior");
     const collectionPage = document.getElementById("collection-page");
     const collectionTitle = document.getElementById("collection-title");
